@@ -99,7 +99,7 @@
     <Compile Include="Controls\ConditionDetailControl.xaml.cs">
       <DependentUpon>ConditionDetailControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Device.cs" />
+    <Compile Include="ViewModels\DeviceViewModel.cs" />
     <Compile Include="Pages\Conditions.xaml.cs">
       <DependentUpon>Conditions.xaml</DependentUpon>
     </Compile>
@@ -177,12 +177,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BridgeRT\BridgeRT.vcxproj">
-      <Project>{2783a617-8e1d-40d1-9684-dfaeb8dd5406}</Project>
-      <Name>BridgeRT</Name>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Guybrush.SmartHome.Client.Data\Guybrush.SmartHome.Client.Data.csproj">
+      <Project>{89d149af-0271-4cdb-bb95-a64b8683f5a5}</Project>
+      <Name>Guybrush.SmartHome.Client.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

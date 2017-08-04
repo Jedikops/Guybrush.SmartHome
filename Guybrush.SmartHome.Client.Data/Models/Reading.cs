@@ -1,8 +1,6 @@
-﻿using Guybrush.SmartHome.Client.Data.Interface;
-
-namespace Guybrush.SmartHome.Client.Data.Models
+﻿namespace Guybrush.SmartHome.Client.Data.Models
 {
-    public class Reading : IDevice
+    public class Reading
     {
         public int Value { get; set; }
 

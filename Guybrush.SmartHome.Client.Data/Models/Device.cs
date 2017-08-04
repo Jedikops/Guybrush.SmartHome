@@ -1,23 +1,45 @@
-﻿using Guybrush.SmartHome.Client.Data.Interface;
+﻿using System;
 
 namespace Guybrush.SmartHome.Client.Data.Models
 {
 
 
-    public class Device : IDevice
+    public class Device
     {
-        public int Status { get; set; }
-        public string Title { get; private set; }
-
-        public Device(string title)
+        private bool _status;
+        public bool Status
         {
-            Title = title;
-            Status = 0;
+            get { return _status; }
+            set { _status = value; }
+        }
+
+        private string _title;
+        public string Title
+        {
+            get { return _title; }
+            set { _title = value; }
+        }
+
+        public Action<int> Method { get; set; }
+
+        public Device()
+        {
+            Title = "";
+            Status = false;
         }
 
         public int GetCurrentValue()
         {
-            return Status;
+            return Status ? 1 : 0;
         }
+
+        public void StatusChange(int status)
+        {
+
+            Method(status);
+            Status = Convert.ToBoolean(status);
+        }
+
+
     }
 }

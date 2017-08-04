@@ -5,10 +5,10 @@
     xmlns:local="using:Guybrush.SmartHome.Client.UWP.Resources"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:Guybrush.SmartHome.Client.UWP.Models"
+    xmlns:model="using:Guybrush.SmartHome.Client.UWP.ViewModels"
     mc:Ignorable="d">
 
-    <DataTemplate x:Key="deviceDataTemplate" x:DataType="model:Device"   >
+    <DataTemplate x:Key="deviceDataTemplate" x:DataType="model:DeviceViewModel"   >
         <Grid   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*"/>

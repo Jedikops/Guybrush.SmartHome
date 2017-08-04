@@ -23,15 +23,15 @@ namespace Guybrush.SmartHome.Station.Devices
             }
         }
 
-        public TurnOnOffDevice(string Name, string VendorName, string Model, string Version, string SerialNumber, string Description, string path)
+        public TurnOnOffDevice(string Name, string VendorName, string Model, string Version, string SerialNumber, string Description)
             : base(Name, VendorName, Model, Version, SerialNumber, Description)
         {
 
             AdapterBusObject abo = new AdapterBusObject(Name);
 
-            _iface = new AdapterInterface(path + ".OnOffControl");
+            _iface = new AdapterInterface("com.guybrush.devices.OnOffControl");
             _attr = new AdapterAttribute("Status", false) { COVBehavior = BridgeRT.SignalBehavior.Always, Access = BridgeRT.E_ACCESS_TYPE.ACCESS_READ };
-            _attr.Annotations.Add(path + ".OnOffControl.Status", "The device status");
+            _attr.Annotations.Add("com.guybrush.devices.OnOffControl.Status", "The device status");
             _iface.Properties.Add(_attr);
             List<IAdapterValue> inputs = new List<IAdapterValue>(1);
             inputs.Add(new AdapterValue("TargetStatus", false));

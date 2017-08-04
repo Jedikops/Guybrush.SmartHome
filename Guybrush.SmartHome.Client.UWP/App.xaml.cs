@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guybrush.SmartHome.Client.Data;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -67,6 +68,8 @@ namespace Guybrush.SmartHome.Client.UWP
                 // Ensure the current window is active
                 Window.Current.Activate();
 
+
+                StationProxy.Current.Initialize();
 
             }
         }

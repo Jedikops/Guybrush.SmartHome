@@ -1,8 +1,8 @@
 ﻿using Guybrush.SmartHome.Client.UWP.Base;
 
-namespace Guybrush.SmartHome.Client.UWP.Models
+namespace Guybrush.SmartHome.Client.UWP.ViewModels
 {
-    public class Device : Observable
+    public class DeviceViewModel : Observable
     {
         private int _status;
         public int Status

@@ -27,9 +27,9 @@ namespace Guybrush.SmartHome.Station
             _homeDevice = new SmarthomeAdapter(config);
             await AllJoynDsbServiceManager.Current.StartAsync(_homeDevice);
 
-            _devices.Add(new TurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", Guid.NewGuid().ToString(), "Guybrush Light", "com.guybrush.devices.light"));
-            _devices.Add(new TurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", Guid.NewGuid().ToString(), "Guybrush air conditioner", "com.guybrush.devices.airconditioner"));
-            _devices.Add(new TurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", Guid.NewGuid().ToString(), "Guybrush blinds", "com.guybrush.devices.blinds"));
+            _devices.Add(new TurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", Guid.NewGuid().ToString(), "Guybrush Light"));
+            _devices.Add(new TurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", Guid.NewGuid().ToString(), "Guybrush air conditioner"));
+            _devices.Add(new TurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", Guid.NewGuid().ToString(), "Guybrush blinds"));
             foreach (var device in _devices)
             {
 

@@ -2,7 +2,7 @@
   "dependencies": {
     "dotMorten.AllJoyn.DeviceProviders": "1.1.1",
     "dotMorten.AllJoyn.DSB": "0.4.1",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.3"
   },
   "frameworks": {
     "uap10.0": {}
