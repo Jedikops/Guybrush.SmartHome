@@ -95,7 +95,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base\Observable.cs" />
     <Compile Include="Controls\ConditionDetailControl.xaml.cs">
       <DependentUpon>ConditionDetailControl.xaml</DependentUpon>
     </Compile>
@@ -177,6 +176,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Handlers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

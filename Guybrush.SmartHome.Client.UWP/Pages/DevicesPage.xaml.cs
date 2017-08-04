@@ -15,6 +15,7 @@ namespace Guybrush.SmartHome.Client.UWP.Pages
         {
             this.InitializeComponent();
             this.Loaded += Devices_Loaded;
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Required;
 
         }
 

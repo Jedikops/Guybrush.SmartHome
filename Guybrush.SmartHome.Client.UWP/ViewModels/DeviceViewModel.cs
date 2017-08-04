@@ -1,4 +1,4 @@
-﻿using Guybrush.SmartHome.Client.UWP.Base;
+﻿using Guybrush.SmartHome.Client.Data.Base;
 
 namespace Guybrush.SmartHome.Client.UWP.ViewModels
 {
@@ -12,6 +12,7 @@ namespace Guybrush.SmartHome.Client.UWP.ViewModels
             {
                 _status = value;
                 OnPropertyChanged();
+                OnPropertyChanged(StatusString);
             }
         }
 

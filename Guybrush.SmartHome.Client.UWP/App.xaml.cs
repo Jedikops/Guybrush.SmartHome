@@ -21,6 +21,7 @@ namespace Guybrush.SmartHome.Client.UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Guybrush.SmartHome.Client.UWP
                 Window.Current.Activate();
 
 
-                StationProxy.Current.Initialize();
+                StationProxy.Current.Activate();
 
             }
         }

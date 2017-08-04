@@ -1,8 +1,5 @@
 ﻿using DeviceProviders;
 using Guybrush.SmartHome.Client.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Guybrush.SmartHome.Client.Data
@@ -10,40 +7,45 @@ namespace Guybrush.SmartHome.Client.Data
     public class StationProxy
     {
 
-
         public static StationProxy Current = new StationProxy();
 
-
         private AllJoynProvider _provider;
+
         private StationProxy()
         {
-            _devices = new ObservableCollection<Device>();
-            _readings = new ObservableCollection<Reading>();
-            _conditions = new ObservableCollection<Condition>();
-            _users = new ObservableCollection<User>();
+            _provider = new AllJoynProvider();
 
-        }
-
-        public void Initialize()
-        {
-            _provider = new DeviceProviders.AllJoynProvider();
             _provider.ServiceJoined += ServiceJoined;
             _provider.ServiceDropped += ServiceDropped;
+
+
+        }
+        public void Activate()
+        {
             _provider.Start();
         }
 
-        private void ServiceDropped(DeviceProviders.IProvider sender, DeviceProviders.ServiceDroppedEventArgs args)
+        private void ServiceDropped(IProvider sender, ServiceDroppedEventArgs args)
         {
             var name = args.Service.AboutData?.DeviceName;
             var id = args.Service.AboutData?.DeviceId;
-
-
-
-
-            System.Diagnostics.Debug.WriteLine($"Lost device '{name}' : ID = {id}");
+            var appName = args.Service.AboutData?.AppName;
+            if (appName == "Guybrush Station")
+            {
+                if (name != "Station")
+                {
+                    lock (Context.Current.Locks["Devices"])
+                    {
+                        var device = Context.Current.Devices.FirstOrDefault(x => x.Title == name);
+                        if (device != null)
+                            Context.Current.Devices.Remove(device);
+                    }
+                }
+                System.Diagnostics.Debug.WriteLine($"Lost device '{name}' : ID = {id}");
+            }
         }
 
-        private async void ServiceJoined(DeviceProviders.IProvider sender, DeviceProviders.ServiceJoinedEventArgs args)
+        private void ServiceJoined(IProvider sender, ServiceJoinedEventArgs args)
         {
             var name = args.Service.AboutData?.DeviceName;
             var id = args.Service.AboutData?.DeviceId;
@@ -69,7 +71,7 @@ namespace Guybrush.SmartHome.Client.Data
                                         var reading = new Reading(prop.Name, "unit");
                                         var result = info.GetResults();
                                         reading.Value = (int)result.Value;
-                                        Readings.Add(reading);
+                                        Context.Current.Readings.Add(reading);
                                     }
 
                                 };
@@ -85,8 +87,6 @@ namespace Guybrush.SmartHome.Client.Data
                     var deviceObj = args.Service.Objects.FirstOrDefault();
                     if (deviceObj != null)
                     {
-
-
                         var iface = deviceObj.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.devices.OnOffControl");
                         if (iface != null)
                         {
@@ -98,32 +98,18 @@ namespace Guybrush.SmartHome.Client.Data
 
                                 prop.ReadValueAsync().Completed += (info, status) =>
                                 {
-                                    var device = new Device();
-                                    var result = info.GetResults();
-                                    device.Title = name;
-                                    device.Status = (bool)result.Value;
-                                    var methodInfo = iface.Methods.First(x => x.Name == "Switch");
-
-                                    Action<int> method = new Action<int>(x =>
+                                    lock (Context.Current.Locks["Devices"])
                                     {
-                                        //This is not validated;
-                                        methodInfo.InvokeAsync(new List<object> { x });
-
-                                    });
-
-                                    device.Method = method;
-                                    Devices.Add(device);
+                                        var device = new Device(iface, name);
+                                        Context.Current.Devices.Add(device);
+                                    }
 
                                 };
-
                             }
                         }
 
                     }
                 }
-
-
-
             }
 
             System.Diagnostics.Debug.WriteLine($"Found device '{name}' : ID = {id}");
@@ -146,20 +132,7 @@ namespace Guybrush.SmartHome.Client.Data
 
 
 
-        private ObservableCollection<Device> _devices;
-        private ObservableCollection<Reading> _readings;
-        private ObservableCollection<Condition> _conditions;
-        private ObservableCollection<User> _users;
-        public ObservableCollection<Device> Devices
-        {
-            get { return _devices; }
-            private set { _devices = value; }
-        }
 
-        public ObservableCollection<Reading> Readings
-        {
-            get { return _readings; }
-            private set { _readings = value; }
-        }
+
     }
 }

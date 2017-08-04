@@ -107,7 +107,10 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\Observable.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="Enums\ConditionType.cs" />
+    <Compile Include="Models\AdapterInterface.cs" />
     <Compile Include="Models\Condition.cs" />
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\Reading.cs" />

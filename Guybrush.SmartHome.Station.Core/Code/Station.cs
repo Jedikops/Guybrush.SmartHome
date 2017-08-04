@@ -2,6 +2,8 @@
 using Guybrush.SmartHome.Station.Devices;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Guybrush.SmartHome.Station
 {
@@ -35,6 +37,35 @@ namespace Guybrush.SmartHome.Station
 
                 AllJoynDsbServiceManager.Current.AddDevice(device);
             }
+
+            var delay = Task.Run(async () =>
+            {
+                AdapterDevice device = null;
+                while (true)
+                {
+                    Stopwatch sw = Stopwatch.StartNew();
+                    await Task.Delay(15000);
+
+                    if (device == null)
+                    {
+                        device = new TurnOnOffDevice("Blinds 2", "Guybrush Inc", "Blinds 2", "1", Guid.NewGuid().ToString(), "Guybrush blinds 2");
+                        _devices.Add(device);
+                        AllJoynDsbServiceManager.Current.AddDevice(device);
+                    }
+                    else
+                    {
+                        _devices.Remove(device);
+                        AllJoynDsbServiceManager.Current.RemoveDevice(device);
+                        device = null;
+
+                    }
+
+                    sw.Stop();
+
+
+                }
+                //return sw.ElapsedMilliseconds;
+            });
 
         }
 

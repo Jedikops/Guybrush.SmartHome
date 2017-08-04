@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Guybrush.SmartHome.Client.UWP.Base
+namespace Guybrush.SmartHome.Client.Data.Base
 {
     public class Observable : INotifyPropertyChanged
     {
