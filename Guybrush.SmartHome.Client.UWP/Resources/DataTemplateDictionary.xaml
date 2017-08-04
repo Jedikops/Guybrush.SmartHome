@@ -1,0 +1,23 @@
+﻿<ResourceDictionary
+    x:Class="Guybrush.SmartHome.Client.UWP.Resources.DataTemplateDictionary"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Guybrush.SmartHome.Client.UWP.Resources"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:Guybrush.SmartHome.Client.UWP.Models"
+    mc:Ignorable="d">
+
+    <DataTemplate x:Key="deviceDataTemplate" x:DataType="model:Device"   >
+        <Grid   >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="{x:Bind Title}" FontWeight="Bold" Grid.Column="0"/>
+            <TextBlock HorizontalAlignment="Right"  Text="{x:Bind StatusString}" x:Phase="1" Grid.Column="1"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

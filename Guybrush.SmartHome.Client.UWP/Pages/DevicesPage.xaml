@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="Guybrush.SmartHome.Client.UWP.Pages.DevicesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Guybrush.SmartHome.Client.UWP.Pages"
+    xmlns:controls="using:Guybrush.SmartHome.Client.UWP.Controls"
+        xmlns:res="using:Guybrush.SmartHome.Client.UWP.Resources"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <res:DataTemplateDictionary />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border Margin="10" Grid.Row="0">
+            <TextBlock x:Name="title" Text="Devices"  VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+        </Border>
+        <ListView ItemsSource="{x:Bind Path=ViewModel.Devices}" 
+                      SelectedItem="{x:Bind ViewModel.SelectedDevice, Mode=TwoWay}" 
+                      ItemTemplate="{StaticResource deviceDataTemplate}" ItemContainerStyle="{StaticResource DevicesListView}" Grid.Row="1"/>
+
+        <Button Visibility="{x:Bind ViewModel.IsDeviceSelected, Mode=OneWay}"  HorizontalAlignment="Stretch"
+                    Content="{x:Bind ViewModel.DeviceButtonText, Mode=OneWay}" Grid.Row="2" 
+                    ></Button>
+
+    </Grid>
+</Page>
