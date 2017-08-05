@@ -24,11 +24,23 @@ namespace Guybrush.SmartHome.Client.UWP.Pages
             //DataContext = new DevicesViewModel();
             ViewModel = new DevicesViewModel();
             Bindings.Update();
+            //DevicesListView.SingleSelectionFollowsFocus = false;
         }
 
         public DevicesViewModel ViewModel { get; private set; }
 
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ViewModel.ChangeStatus();
+            DevicesListView.Focus(Windows.UI.Xaml.FocusState.Pointer);
 
+        }
 
+        private void DevicesListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            
+            ViewModel.ChangeStatus();
+
+        }
     }
 }

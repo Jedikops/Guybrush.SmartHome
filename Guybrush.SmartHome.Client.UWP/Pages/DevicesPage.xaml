@@ -29,12 +29,12 @@
         <Border Margin="10" Grid.Row="0">
             <TextBlock x:Name="title" Text="Devices"  VerticalAlignment="Bottom" HorizontalAlignment="Center" />
         </Border>
-        <ListView ItemsSource="{x:Bind Path=ViewModel.Devices}" 
-                      SelectedItem="{x:Bind ViewModel.SelectedDevice, Mode=TwoWay}" 
-                      ItemTemplate="{StaticResource deviceDataTemplate}" ItemContainerStyle="{StaticResource DevicesListView}" Grid.Row="1"/>
+        <ListView x:Name="DevicesListView" ItemsSource="{x:Bind Path=ViewModel.Devices}"  IsItemClickEnabled="true" ItemClick="DevicesListView_ItemClick"
+                      SelectedItem="{x:Bind ViewModel.SelectedDevice, Mode=TwoWay}"  
+                      ItemTemplate="{StaticResource deviceDataTemplate}" ItemContainerStyle="{StaticResource DevicesListView}" Grid.Row="1" SelectionMode="Single" />
 
         <Button Visibility="{x:Bind ViewModel.IsDeviceSelected, Mode=OneWay}"  HorizontalAlignment="Stretch"
-                    Content="{x:Bind ViewModel.DeviceButtonText, Mode=OneWay}" Grid.Row="2" 
+                    Content="{x:Bind ViewModel.DeviceButtonText, Mode=OneWay}" Grid.Row="2" ClickMode="Release" Click="{x:Bind Button_Click}"
                     ></Button>
 
     </Grid>

@@ -1,10 +1,9 @@
 ﻿using Guybrush.SmartHome.Client.Data;
 using Guybrush.SmartHome.Client.Data.Base;
-using Guybrush.SmartHome.Client.Data.Models;
+using Guybrush.SmartHome.Client.UWP.Handlers;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.UI.Core;
 
 namespace Guybrush.SmartHome.Client.UWP.ViewModels
 {
@@ -28,47 +27,17 @@ namespace Guybrush.SmartHome.Client.UWP.ViewModels
                         var devVM = new DeviceViewModel()
                         {
                             Title = device.Title,
-                            Status = device.GetCurrentValue()
+                            Status = Convert.ToInt32(device.Status)
                         };
                         Devices.Add(devVM);
                     }
                 }
 
-                Context.Current.Devices.CollectionChanged += Devices_CollectionChanged;
+                CollectionHandler<DeviceViewModel> handler = new CollectionHandler<DeviceViewModel>(Devices, SelectedDevice);
+                Context.Current.Devices.CollectionChanged += handler.Devices_CollectionChanged;
             }
         }
 
-        public async void Devices_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                    () =>
-                    {
-                      
-                        if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
-                        {
-                            foreach (Device device in e.NewItems.OfType<Device>())
-                            {
-                                var dev = new DeviceViewModel() { Title = device.Title, Status = Convert.ToInt32(device.Status) };
-
-                                Devices.Add(dev);
-
-                            }
-
-                        }
-                        else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-                        {
-                            foreach (Device device in e.OldItems.OfType<Device>())
-                            {
-                                var deviceVM = Devices.FirstOrDefault(x => x.Title == device.Title);
-                                if (deviceVM != null)
-                                    Devices.Remove(deviceVM);
-                            }
-                        }
-                       
-                    });
-
-
-        }
         #region Selected Device
 
         private DeviceViewModel _selectedDevice;
@@ -107,6 +76,16 @@ namespace Guybrush.SmartHome.Client.UWP.ViewModels
             }
         }
 
+        internal void ChangeStatus()
+        {
+            if (SelectedDevice != null)
+            {
+                var device = Context.Current.Devices.FirstOrDefault(x => x.Title == SelectedDevice.Title);
+                if (device != null)
+                    device.UpdateValue(!Convert.ToBoolean(SelectedDevice.Status));
+
+            }
+        }
         #endregion
 
     }

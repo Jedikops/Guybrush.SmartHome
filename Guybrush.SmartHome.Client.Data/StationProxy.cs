@@ -101,6 +101,7 @@ namespace Guybrush.SmartHome.Client.Data
                                     lock (Context.Current.Locks["Devices"])
                                     {
                                         var device = new Device(iface, name);
+                                        
                                         Context.Current.Devices.Add(device);
                                     }
 

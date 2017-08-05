@@ -35,7 +35,7 @@ namespace Guybrush.SmartHome.Station.Devices
             _iface.Properties.Add(_attr);
             List<IAdapterValue> inputs = new List<IAdapterValue>(1);
             inputs.Add(new AdapterValue("TargetStatus", false));
-            AdapterMethod method = new AdapterMethod("Switch", "Switches devices on or off.", switchDevice, inputs);
+            AdapterMethod method = new AdapterMethod("Switch", "Switches devices on or off.", ChangeStatus, inputs);
             _iface.Methods.Add(method);
 
             _signal = new AdapterSignal("StatusChanged");
@@ -49,7 +49,7 @@ namespace Guybrush.SmartHome.Station.Devices
 
         }
 
-        private void switchDevice(AdapterMethod sender, IReadOnlyDictionary<string, object> inputParams, IDictionary<string, object> outputParams)
+        private void ChangeStatus(AdapterMethod sender, IReadOnlyDictionary<string, object> inputParams, IDictionary<string, object> outputParams)
         {
             bool targetStatus = (bool)inputParams["TargetStatus"];
 
@@ -67,7 +67,7 @@ namespace Guybrush.SmartHome.Station.Devices
             {
                 attr.Value.Data = value;
                 SignalChangeOfAttributeValue(_iface, attr);
-                NotifySignalListener(_iface.Signals[0]);
+                //NotifySignalListener(_iface.Signals[0]);
             }
         }
 

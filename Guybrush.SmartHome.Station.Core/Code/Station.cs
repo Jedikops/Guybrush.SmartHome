@@ -31,7 +31,8 @@ namespace Guybrush.SmartHome.Station
 
             _devices.Add(new TurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", Guid.NewGuid().ToString(), "Guybrush Light"));
             _devices.Add(new TurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", Guid.NewGuid().ToString(), "Guybrush air conditioner"));
-            _devices.Add(new TurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", Guid.NewGuid().ToString(), "Guybrush blinds"));
+            var blindDevice = new TurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", Guid.NewGuid().ToString(), "Guybrush blinds");
+            _devices.Add(blindDevice);
             foreach (var device in _devices)
             {
 
@@ -46,19 +47,21 @@ namespace Guybrush.SmartHome.Station
                     Stopwatch sw = Stopwatch.StartNew();
                     await Task.Delay(15000);
 
-                    if (device == null)
-                    {
-                        device = new TurnOnOffDevice("Blinds 2", "Guybrush Inc", "Blinds 2", "1", Guid.NewGuid().ToString(), "Guybrush blinds 2");
-                        _devices.Add(device);
-                        AllJoynDsbServiceManager.Current.AddDevice(device);
-                    }
-                    else
-                    {
-                        _devices.Remove(device);
-                        AllJoynDsbServiceManager.Current.RemoveDevice(device);
-                        device = null;
+                    //if (device == null)
+                    //{
+                    //    device = new TurnOnOffDevice("Blinds 2", "Guybrush Inc", "Blinds 2", "1", Guid.NewGuid().ToString(), "Guybrush blinds 2");
+                    //    _devices.Add(device);
+                    //    AllJoynDsbServiceManager.Current.AddDevice(device);
+                    //}
+                    //else
+                    //{
+                    //    _devices.Remove(device);
+                    //    AllJoynDsbServiceManager.Current.RemoveDevice(device);
+                    //    device = null;
+                    //
+                    //}
 
-                    }
+                    blindDevice.CurrentValue = !blindDevice.CurrentValue;
 
                     sw.Stop();
 

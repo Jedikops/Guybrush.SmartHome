@@ -98,6 +98,7 @@
     <Compile Include="Controls\ConditionDetailControl.xaml.cs">
       <DependentUpon>ConditionDetailControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\CollectionHandler.cs" />
     <Compile Include="ViewModels\DeviceViewModel.cs" />
     <Compile Include="Pages\Conditions.xaml.cs">
       <DependentUpon>Conditions.xaml</DependentUpon>
@@ -176,7 +177,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Handlers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

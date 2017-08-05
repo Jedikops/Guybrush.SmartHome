@@ -120,6 +120,7 @@
     <EmbeddedResource Include="Properties\Guybrush.SmartHome.Client.Data.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Handlers\" />
     <Folder Include="Interface\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

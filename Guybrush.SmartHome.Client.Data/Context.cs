@@ -38,9 +38,7 @@ namespace Guybrush.SmartHome.Client.Data
             Locks.Add("Readings", new object());
             Locks.Add("Conditions", new object());
             Locks.Add("Users", new object());
+
         }
-
-
-
     }
 }

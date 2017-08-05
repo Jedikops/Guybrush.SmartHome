@@ -8,8 +8,8 @@
     xmlns:model="using:Guybrush.SmartHome.Client.UWP.ViewModels"
     mc:Ignorable="d">
 
-    <DataTemplate x:Key="deviceDataTemplate" x:DataType="model:DeviceViewModel"   >
-        <Grid   >
+    <DataTemplate x:Key="deviceDataTemplate" x:DataType="model:DeviceViewModel" >
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="*"/>
@@ -17,7 +17,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="{x:Bind Title}" FontWeight="Bold" Grid.Column="0"/>
-            <TextBlock HorizontalAlignment="Right"  Text="{x:Bind StatusString}" x:Phase="1" Grid.Column="1"/>
+            <TextBlock HorizontalAlignment="Right"  Text="{x:Bind StatusString,Mode=OneWay}" x:Phase="1" Grid.Column="1"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
