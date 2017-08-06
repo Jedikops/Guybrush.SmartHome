@@ -34,6 +34,7 @@ namespace Guybrush.SmartHome.Client.Data
             _users = new ObservableCollection<User>();
             Locks = new Dictionary<string, object>();
 
+            Locks.Add("Global", new object());
             Locks.Add("Devices", new object());
             Locks.Add("Readings", new object());
             Locks.Add("Conditions", new object());

@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Devices\DisplayDevice.cs" />
+    <Compile Include="Code\Devices\ReadingsDevice.cs" />
     <Compile Include="Code\Devices\ReaderDevice.cs" />
     <Compile Include="Code\Devices\TurnOnOffDevice.cs" />
     <Compile Include="Code\SmarthomeAdapter.cs" />

@@ -38,8 +38,8 @@ namespace Guybrush.SmartHome.Client.UWP.Pages
 
         private void DevicesListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            
-            ViewModel.ChangeStatus();
+
+            ViewModel.ChangeStatus((DeviceViewModel)e.ClickedItem);
 
         }
     }

@@ -3,6 +3,7 @@ using Guybrush.SmartHome.Client.Data.Models;
 using Guybrush.SmartHome.Client.UWP.ViewModels;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using Windows.UI.Core;
 
@@ -68,6 +69,55 @@ namespace Guybrush.SmartHome.Client.UWP.Handlers
 
         }
 
+        internal async void Readings_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                    () =>
+                    {
+                        if (e.Action == NotifyCollectionChangedAction.Add)
+                        {
+                            foreach (Reading reading in e.NewItems.OfType<Reading>())
+                            {
+                                var read = new ReadingViewModel() { Title = reading.Title, Value = reading.Value, Unit = reading.Unit } as T;
 
+                                Collection.Add(read);
+
+                            }
+
+                        }
+                        else if (e.Action == NotifyCollectionChangedAction.Remove)
+                        {
+                            foreach (Reading reading in e.OldItems.OfType<Reading>())
+                            {
+
+                                var readerVM = Collection.FirstOrDefault(x => (x as ReadingViewModel).Title == reading.Title);
+                                if (readerVM != null)
+                                    Collection.Remove(readerVM);
+                            }
+                        }
+                        else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+                        {
+                            //foreach(Device oldDevice in e.OldItems)
+                            for (int i = 0; i < e.OldItems.Count; i++)
+                            {
+                                var oldReadVM = Collection.FirstOrDefault(x => (x as ReadingViewModel).Title == ((Reading)e.OldItems[i]).Title);
+                                if (oldReadVM != null)
+                                {
+                                    var newRead = (Reading)e.NewItems[i];
+                                    int index = Collection.IndexOf(oldReadVM);
+
+                                    Collection[index] = new ReadingViewModel() { Title = newRead.Title, Value = newRead.Value, Unit = newRead.Unit } as T;
+                                    SelectedItem = Collection[index];
+                                }
+                            }
+
+                        }
+                        else if (e.Action == NotifyCollectionChangedAction.Reset)
+                        {
+                            Collection.Clear();
+                        }
+
+                    });
+        }
     }
 }

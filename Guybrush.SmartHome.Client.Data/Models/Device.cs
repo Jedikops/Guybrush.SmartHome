@@ -43,15 +43,19 @@ namespace Guybrush.SmartHome.Client.Data.Models
             _status = false;
 
             _iface = iface;
-            _prop = iface.Properties.First(x => x.Name == "Status");
-            _prop.ValueChanged += _prop_ValueChanged;
-            _method = iface.Methods.First(x => x.Name == "Switch");
-            LoadValue();
+            _prop = iface.Properties.FirstOrDefault(x => x.Name == "Status");
+            if (_prop != null)
+            {
+                _prop.ValueChanged += _prop_ValueChanged;
+                _method = iface.Methods.First(x => x.Name == "Switch");
+
+                LoadValue();
+            }
         }
 
 
 
-        public bool LoadValue()
+        public void LoadValue()
         {
             _prop.ReadValueAsync().Completed += (info, status) =>
             {
@@ -59,7 +63,6 @@ namespace Guybrush.SmartHome.Client.Data.Models
                 _status = (bool)result.Value;
 
             };
-            return _status;
         }
 
         private void _prop_ValueChanged(IProperty sender, object args)

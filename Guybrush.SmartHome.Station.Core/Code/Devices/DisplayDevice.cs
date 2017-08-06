@@ -5,13 +5,12 @@ namespace Guybrush.SmartHome.Station.Core.Code.Devices
     public class DisplayDevice
     {
 
-        AdapterAttribute _attr;
-        AdapterSignal _signal;
-
+        public AdapterInterface Interface { get; set; }
         public DisplayDevice(string displayDeviceName, string annotationKey, string annotationDescription)
         {
+            Interface = new AdapterInterface("com.guybrush.station.display." + displayDeviceName.ToLower().Replace(' ', '_'));
 
-            _attr = new AdapterAttribute(displayDeviceName, "Hello!", (o) =>
+            var _attr = new AdapterAttribute("Value", "Hello!", (o) =>
                 {
                     string newValue = (string)o;
                     return AllJoynStatusCode.Ok;
@@ -20,31 +19,9 @@ namespace Guybrush.SmartHome.Station.Core.Code.Devices
             _attr.Annotations.Add(annotationKey, annotationDescription);
             _attr.COVBehavior = BridgeRT.SignalBehavior.Always;
 
-            _signal = new AdapterSignal(displayDeviceName + "-signal");
-            _signal.Params.Add(_attr.Value);
+            Interface.Properties.Add(_attr);
 
         }
 
-        public AdapterAttribute GetAttribute()
-        {
-            return _attr;
-        }
-
-        public AdapterSignal GetSignal()
-        {
-            return _signal;
-        }
-
-        public string GetCurrentValue()
-        {
-            return (string)_attr.Value.Data;
-        }
-
-        public void SetCurrentValue(string value)
-        {
-            _attr.Value.Data = value;
-            
-
-        }
     }
 }

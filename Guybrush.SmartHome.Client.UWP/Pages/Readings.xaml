@@ -4,10 +4,32 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Guybrush.SmartHome.Client.UWP.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:res="using:Guybrush.SmartHome.Client.UWP.Resources"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <res:ReadingTemplateDictionary />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
+        <Border Margin="10" Grid.Row="0">
+            <TextBlock x:Name="title" Text="Devices"  VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+        </Border>
+        <ListView x:Name="DevicesListView" ItemsSource="{x:Bind Path=ViewModel.Readings}" 
+                      ItemTemplate="{StaticResource readingDataTemplate}"  SelectionMode="None"
+                  ItemContainerStyle="{StaticResource ReadingsListView}" 
+                  Grid.Row="1"/>
     </Grid>
 </Page>

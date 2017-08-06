@@ -9,9 +9,7 @@ namespace Guybrush.SmartHome.Station.Devices
     {
 
         private bool _currentValue;
-        AdapterInterface _iface;
-        AdapterAttribute _attr;
-        AdapterSignal _signal;
+        private AdapterInterface Interface { get; set; }
 
         public bool CurrentValue
         {
@@ -27,24 +25,23 @@ namespace Guybrush.SmartHome.Station.Devices
             : base(Name, VendorName, Model, Version, SerialNumber, Description)
         {
 
-            AdapterBusObject abo = new AdapterBusObject(Name);
+            AdapterBusObject busObject = new AdapterBusObject(Name);
 
-            _iface = new AdapterInterface("com.guybrush.devices.OnOffControl");
-            _attr = new AdapterAttribute("Status", false) { COVBehavior = BridgeRT.SignalBehavior.Always, Access = BridgeRT.E_ACCESS_TYPE.ACCESS_READ };
-            _attr.Annotations.Add("com.guybrush.devices.OnOffControl.Status", "The device status");
-            _iface.Properties.Add(_attr);
+            Interface = new AdapterInterface("com.guybrush.devices.OnOffControl");
+            var attr = new AdapterAttribute("Status", false) { COVBehavior = BridgeRT.SignalBehavior.Always, Access = BridgeRT.E_ACCESS_TYPE.ACCESS_READ };
+            attr.Annotations.Add("com.guybrush.devices.OnOffControl.Status", "The device status");
+            Interface.Properties.Add(attr);
+
             List<IAdapterValue> inputs = new List<IAdapterValue>(1);
             inputs.Add(new AdapterValue("TargetStatus", false));
+
             AdapterMethod method = new AdapterMethod("Switch", "Switches devices on or off.", ChangeStatus, inputs);
-            _iface.Methods.Add(method);
+            Interface.Methods.Add(method);
 
-            _signal = new AdapterSignal("StatusChanged");
-            _signal.Params.Add(_attr.Value);
-            _iface.Signals.Add(_signal);
-
-            abo.Interfaces.Add(_iface);
-            BusObjects.Add(abo);
+            busObject.Interfaces.Add(Interface);
+            BusObjects.Add(busObject);
             CreateEmitSignalChangedSignal();
+
             _currentValue = false;
 
         }
@@ -60,21 +57,14 @@ namespace Guybrush.SmartHome.Station.Devices
 
         public void UpdateValue(bool value)
         {
-            var attr = _iface.Properties.Where(a => a.Value.Name == "Status").First();
+            var attr = Interface.Properties.Where(a => a.Value.Name == "Status").First();
 
 
             if (attr.Value.Data != (object)value)
             {
                 attr.Value.Data = value;
-                SignalChangeOfAttributeValue(_iface, attr);
-                //NotifySignalListener(_iface.Signals[0]);
+                SignalChangeOfAttributeValue(Interface, attr);
             }
         }
-
-        public AdapterSignal GetSignal()
-        {
-            return _signal;
-        }
-
     }
 }

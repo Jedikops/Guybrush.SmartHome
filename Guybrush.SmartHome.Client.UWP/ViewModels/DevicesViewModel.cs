@@ -76,9 +76,9 @@ namespace Guybrush.SmartHome.Client.UWP.ViewModels
             }
         }
 
-        internal void ChangeStatus()
+        internal void ChangeStatus(DeviceViewModel clickedDevice = null)
         {
-            if (SelectedDevice != null)
+            if (SelectedDevice != null && (SelectedDevice == clickedDevice || clickedDevice == null))
             {
                 var device = Context.Current.Devices.FirstOrDefault(x => x.Title == SelectedDevice.Title);
                 if (device != null)
