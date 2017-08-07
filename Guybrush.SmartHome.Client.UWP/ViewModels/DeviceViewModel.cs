@@ -12,7 +12,7 @@ namespace Guybrush.SmartHome.Client.UWP.ViewModels
             {
                 _status = value;
                 OnPropertyChanged();
-                OnPropertyChanged(StatusString);
+                //OnPropertyChanged(StatusString);
             }
         }
 

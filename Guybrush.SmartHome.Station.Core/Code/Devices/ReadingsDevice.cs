@@ -7,36 +7,24 @@ namespace Guybrush.SmartHome.Station.Core.Code.Devices
 {
     public class ReadingsDevice : AdapterDevice
     {
-        private IList<ReaderDevice> _readers;
-        private IList<DisplayDevice> _displays;
+        private IList<ReaderInterface> _readers;
         private AdapterBusObject _busObject;
         public ReadingsDevice()
-            : base("Readings", "Guybrush Inc", "Readings", "1", Guid.NewGuid().ToString(), "Guybrush readings device.")
+            : base("Readings", "Guybrush Inc", "Readings", "1", Guid.NewGuid().ToString(), "Guybrush readings collector device.")
         {
             _busObject = new AdapterBusObject("Readings");
-            _readers = new List<ReaderDevice>();
-            _displays = new List<DisplayDevice>();
+            _readers = new List<ReaderInterface>();
             BusObjects.Add(_busObject);
 
         }
 
-        public ReaderDevice RegisterReader(string readingTitle, string unit, string annotationKey, string annotationDescription)
+        public ReaderInterface RegisterReader(string readingTitle, string unit, string annotationKey, string annotationDescription)
         {
-            ReaderDevice reader = new ReaderDevice(readingTitle, unit, annotationKey, annotationDescription);
+            ReaderInterface reader = new ReaderInterface(readingTitle, unit, annotationKey, annotationDescription);
             _busObject.Interfaces.Add(reader.Interface);
             _readers.Add(reader);
             CreateEmitSignalChangedSignal();
             return reader;
-
-        }
-
-        public DisplayDevice RegisterDisplay(string displayDeviceName, string annotationKey, string annotationDescription)
-        {
-            var display = new DisplayDevice(displayDeviceName, annotationKey, annotationDescription);
-            _busObject.Interfaces.Add(display.Interface);
-            _displays.Add(display);
-            CreateEmitSignalChangedSignal();
-            return display;
 
         }
 

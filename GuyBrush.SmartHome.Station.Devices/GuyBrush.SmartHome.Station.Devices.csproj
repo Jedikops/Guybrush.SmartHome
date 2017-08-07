@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D4D1300F-00F5-4498-8E97-72150B7CB991}</ProjectGuid>
+    <ProjectGuid>{6B9619BC-E214-42B5-9417-3DA8631330FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Guybrush.SmartHome.Station.Core</RootNamespace>
-    <AssemblyName>Guybrush.SmartHome.Station.Core</AssemblyName>
+    <RootNamespace>GuyBrush.SmartHome.Station.Devices</RootNamespace>
+    <AssemblyName>GuyBrush.SmartHome.Station.Devices</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -107,18 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\Devices\DisplaysDevice.cs" />
-    <Compile Include="Code\Interfaces\DisplayInterface.cs" />
-    <Compile Include="Code\Devices\ReadingsDevice.cs" />
-    <Compile Include="Code\Helpers\StationHelper.cs" />
-    <Compile Include="Code\Interfaces\ReaderInterface.cs" />
-    <Compile Include="Code\Devices\TurnOnOffDevice.cs" />
-    <Compile Include="Code\SmarthomeAdapter.cs" />
-    <Compile Include="Code\Station.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Guybrush.SmartHome.Station.Core.rd.xml" />
+    <EmbeddedResource Include="Properties\GuyBrush.SmartHome.Station.Devices.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

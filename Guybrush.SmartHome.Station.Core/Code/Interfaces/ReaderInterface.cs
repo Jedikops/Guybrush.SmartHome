@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace Guybrush.SmartHome.Station.Core.Code.Devices
 {
-    public class ReaderDevice
+    public class ReaderInterface
     {
         public string Name { get; private set; }
         public AdapterInterface Interface { get; private set; }
-        public ReaderDevice(string readingTitle, string unit, string annotationKey, string annotationDescription)
+        public ReaderInterface(string readingTitle, string unit, string annotationKey, string annotationDescription)
         {
             Name = readingTitle;
             Interface = new AdapterInterface("com.guybrush.station.readings." + readingTitle.ToLower().Replace(' ', '_'));

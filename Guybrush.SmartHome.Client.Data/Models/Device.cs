@@ -60,7 +60,8 @@ namespace Guybrush.SmartHome.Client.Data.Models
             _prop.ReadValueAsync().Completed += (info, status) =>
             {
                 var result = info.GetResults();
-                _status = (bool)result.Value;
+                if (result.Value != null)
+                    _status = (bool)result.Value;
 
             };
         }
