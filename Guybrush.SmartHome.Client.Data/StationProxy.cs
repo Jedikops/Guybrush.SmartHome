@@ -76,6 +76,7 @@ namespace Guybrush.SmartHome.Client.Data
                             {
                                 lock (Context.Current.Locks["Readings"])
                                 {
+
                                     var reading = new Reading(iface);
 
                                     Context.Current.Readings.Add(reading);

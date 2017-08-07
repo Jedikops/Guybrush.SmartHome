@@ -3,9 +3,9 @@ using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Modules.TestInterface;
 using System;
 
-namespace Guybrush.SmartHome.Modules.Standard
+namespace Guybrush.SmartHome.Station.Tests.Mocks
 {
-    public class LightSensor : IReaderModule, ITestReadModule
+    public class HumiditySensor : IReaderModule, ITestReadModule
     {
         private Guid _id = Guid.NewGuid();
         public Guid Id
@@ -28,13 +28,11 @@ namespace Guybrush.SmartHome.Modules.Standard
             }
         }
 
-        private readonly string _unit = "Lux";
+        private readonly string _unit = "%";
 
-        public string Unit
-        {
-            get { return _unit; }
-        }
+        public string Unit { get { return _unit; } }
 
         public event ReaderEventArgs ValueChanged;
+
     }
 }

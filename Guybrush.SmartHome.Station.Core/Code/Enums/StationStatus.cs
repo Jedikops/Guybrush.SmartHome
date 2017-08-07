@@ -2,7 +2,8 @@
 {
     public enum StationStatus
     {
-        Down = 0,
-        Active = 1
+        Stopped = 0,
+        Running = 1,
+        Restarting = 2
     }
 }

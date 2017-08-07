@@ -2,12 +2,10 @@
 using Guybrush.SmartHome.Modules.Interfaces;
 using System;
 
-namespace Guybrush.SmartHome.Modules.Standard
+namespace Guybrush.SmartHome.Station.Tests.Mocks
 {
     public class AirConditioner : ITurnOnOffModule
     {
-        private bool _status;
-
         private Guid _id = Guid.NewGuid();
         public Guid Id
         {
@@ -17,6 +15,7 @@ namespace Guybrush.SmartHome.Modules.Standard
             }
         }
 
+        private bool _status;
         public bool Status
         {
             get

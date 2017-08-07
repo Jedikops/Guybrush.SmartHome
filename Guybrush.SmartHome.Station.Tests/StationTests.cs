@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Guybrush.SmartHome.Station.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class StationTest
     {
         private Station _station;
 
@@ -16,7 +16,6 @@ namespace Guybrush.SmartHome.Station.Tests
             {
 
                 await _station.Initialize();
-                _station.Start();
             });
             task.Wait();
 
@@ -25,7 +24,7 @@ namespace Guybrush.SmartHome.Station.Tests
         [TestMethod]
         public void IsActive()
         {
-            Assert.IsTrue(_station.Status == Core.Enums.StationStatus.Active);
+            Assert.IsTrue(_station.Status == Core.Enums.StationStatus.Running);
         }
 
         [TestCleanup]

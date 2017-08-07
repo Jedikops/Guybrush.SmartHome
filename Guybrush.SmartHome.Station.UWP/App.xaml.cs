@@ -1,6 +1,4 @@
-﻿using Guybrush.SmartHome.Modules.Standard;
-using System;
-using System.Threading.Tasks;
+﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -73,9 +71,6 @@ namespace Guybrush.SmartHome.Station.UWP
                 // Ensure the current window is active
                 Window.Current.Activate();
 
-                LaunchStation();
-
-
             }
         }
 
@@ -102,46 +97,12 @@ namespace Guybrush.SmartHome.Station.UWP
             //TODO: Save application state and stop any background activity
             deferral.Complete();
 
-            ShutdownStation();
-
         }
 
         #endregion
 
 
-        Station _station;
-        private void LaunchStation()
-        {
-            //SmartHome code
-            Task.Run(async () =>
-            {
-                _station = new Station();
-                await _station.Initialize();
 
-                _station.RegisterDeviceTurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", Guid.NewGuid().ToString(), "Guybrush Light", new Light());
-                _station.RegisterDeviceTurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", Guid.NewGuid().ToString(), "Guybrush air conditioner", new AirConditioner());
-                _station.RegisterDeviceTurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", Guid.NewGuid().ToString(), "Guybrush blinds", new Blinds());
-
-                _station.RegisterReadingDevice("Light Intensity", "Lux", "Light intensity reading", "Current light intensity value in Lux", new LightSensor());
-                _station.RegisterReadingDevice("Temperature", "C", "Temperature reading", "Current temperature value in Celcious", new Termomethre());
-                _station.RegisterReadingDevice("Humidity", "%", "Humidity reading", "Current humidity", new HumiditySensor());
-
-                _station.RegisterDisplayDevice("Display", "Display device", "Display device last message", new Display());
-
-                _station.Start();
-            }).Wait();
-
-
-        }
-
-        private void ShutdownStation()
-        {
-            Task.Run(async () =>
-            {
-                if (_station != null)
-                    await _station.Shutdown();
-            }).Wait();
-        }
 
     }
 

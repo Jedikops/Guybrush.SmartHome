@@ -1,10 +1,12 @@
 ﻿using Guybrush.SmartHome.Modules.Delegates;
+using System;
 
 namespace Guybrush.SmartHome.Modules.Interfaces
 {
 
     public interface IReaderModule
     {
+        Guid Id { get; }
         int Value { get; }
         string Unit { get; }
 

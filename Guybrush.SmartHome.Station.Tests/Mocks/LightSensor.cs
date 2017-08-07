@@ -3,7 +3,7 @@ using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Modules.TestInterface;
 using System;
 
-namespace Guybrush.SmartHome.Modules.Standard
+namespace Guybrush.SmartHome.Station.Tests.Mocks
 {
     public class LightSensor : IReaderModule, ITestReadModule
     {

@@ -1,4 +1,5 @@
 ﻿using AllJoyn.Dsb;
+using BridgeRT;
 using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Station.Core.AllJoyn.Interfaces;
 using System;
@@ -21,16 +22,29 @@ namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
 
         }
 
-        public ReaderInterface RegisterReader(string readingTitle, string unit, string annotationKey, string annotationDescription, IReaderModule module)
+        public void RegisterReader(string readingTitle, string unit, string annotationKey, string annotationDescription, IReaderModule module)
         {
+            var oldiface = _busObject.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.station.readings." + readingTitle.ToLower().Replace(' ', '_'));
+            if (oldiface == null)
+            {
+                ReaderInterface reader = new ReaderInterface(readingTitle, unit, annotationKey, annotationDescription, module);
+                _busObject.Interfaces.Add(reader.Interface);
+                _readers.Add(reader);
+                CreateEmitSignalChangedSignal();
+                reader.ValueChanged += Reader_ValueChanged;
+            }
+        }
 
-            ReaderInterface reader = new ReaderInterface(readingTitle, unit, annotationKey, annotationDescription, module);
-            _busObject.Interfaces.Add(reader.Interface);
-            _readers.Add(reader);
-            CreateEmitSignalChangedSignal();
-            reader.ValueChanged += Reader_ValueChanged;
-            return reader;
-
+        internal void UnregisterReader(string readingTitle)
+        {
+            IAdapterInterface iface = _busObject.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.station.readings." + readingTitle.ToLower().Replace(' ', '_'));
+            if (iface != null)
+            {
+                _busObject.Interfaces.Remove(iface);
+                var reader = _readers.First(x => x.Name == readingTitle);
+                _readers.Remove(reader);
+                CreateEmitSignalChangedSignal();
+            }
         }
 
         private void Reader_ValueChanged(object sender, int value)
@@ -48,6 +62,7 @@ namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
                     SignalChangeOfAttributeValue(reader.Interface, attr);
             }
         }
+
 
     }
 }

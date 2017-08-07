@@ -1,4 +1,5 @@
 ﻿using AllJoyn.Dsb;
+using BridgeRT;
 using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Station.Core.AllJoyn.Interfaces;
 using System;
@@ -22,15 +23,29 @@ namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
 
         }
 
-        public DisplayInterface RegisterDisplay(string displayDeviceName, string annotationKey, string annotationDescription, IDisplayModule module)
+        public void RegisterDisplay(string displayDeviceName, string annotationKey, string annotationDescription, IDisplayModule module)
         {
-            var display = new DisplayInterface(displayDeviceName, annotationKey, annotationDescription, module);
-            _busObject.Interfaces.Add(display.Interface);
-            _displays.Add(display);
-            CreateEmitSignalChangedSignal();
-            display.ValueChanged += Display_ValueChanged;
-            return display;
+            var oldiface = _busObject.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.station.displays." + displayDeviceName.ToLower().Replace(' ', '_'));
+            if (oldiface == null)
+            {
+                var display = new DisplayInterface(displayDeviceName, annotationKey, annotationDescription, module);
+                _busObject.Interfaces.Add(display.Interface);
+                _displays.Add(display);
+                CreateEmitSignalChangedSignal();
+                display.ValueChanged += Display_ValueChanged;
+            }
+        }
 
+        internal void UnregisterReader(string displayDeviceName)
+        {
+            IAdapterInterface iface = _busObject.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.station.displays." + displayDeviceName.ToLower().Replace(' ', '_'));
+            if (iface != null)
+            {
+                _busObject.Interfaces.Remove(iface);
+                var reader = _displays.First(x => x.Name == displayDeviceName);
+                _displays.Remove(reader);
+                CreateEmitSignalChangedSignal();
+            }
         }
 
         private void Display_ValueChanged(object sender, string text)

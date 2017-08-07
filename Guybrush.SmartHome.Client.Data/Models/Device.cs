@@ -1,13 +1,11 @@
 ﻿using DeviceProviders;
-using Guybrush.SmartHome.Client.Data.Base;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Guybrush.SmartHome.Client.Data.Models
 {
 
-
-    public class Device : Observable
+    public class Device
     {
         private readonly IInterface _iface;
         private readonly IProperty _prop;
@@ -21,7 +19,6 @@ namespace Guybrush.SmartHome.Client.Data.Models
             set
             {
                 _status = value;
-                //OnPropertyChanged();
             }
         }
 
@@ -33,7 +30,6 @@ namespace Guybrush.SmartHome.Client.Data.Models
             set
             {
                 _title = value;
-                //OnPropertyChanged();
             }
         }
 
