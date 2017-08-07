@@ -63,7 +63,6 @@ namespace Guybrush.SmartHome.Station
         {
             var delay = Task.Run(async () =>
             {
-                var read = 0;
                 TurnOnOffDevice deva = null;
                 var rand = new Random();
                 while (true)
@@ -73,7 +72,6 @@ namespace Guybrush.SmartHome.Station
                     if (deva == null)
                     {
                         deva = new TurnOnOffDevice("Blinds 2", "Guybrush Inc", "Blinds 2", "1", Guid.NewGuid().ToString(), "Guybrush blinds 2", new Blinds());
-                        _devices.Add(deva);
                         AllJoynDsbServiceManager.Current.AddDevice(deva);
                     }
                     else
