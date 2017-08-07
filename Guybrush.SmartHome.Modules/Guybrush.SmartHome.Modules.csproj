@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D4D1300F-00F5-4498-8E97-72150B7CB991}</ProjectGuid>
+    <ProjectGuid>{3F26B05D-F5B3-4F56-9ADB-791B7A360CF8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Guybrush.SmartHome.Station.Core</RootNamespace>
-    <AssemblyName>Guybrush.SmartHome.Station.Core</AssemblyName>
+    <RootNamespace>Guybrush.SmartHome.Modules</RootNamespace>
+    <AssemblyName>Guybrush.SmartHome.Modules</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -107,22 +107,20 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\AllJoyn\Devices\DisplaysDevice.cs" />
-    <Compile Include="Code\AllJoyn\Interfaces\DisplayInterface.cs" />
-    <Compile Include="Code\AllJoyn\Devices\ReadingsDevice.cs" />
-    <Compile Include="Code\Helpers\StationHelper.cs" />
-    <Compile Include="Code\AllJoyn\Interfaces\ReaderInterface.cs" />
-    <Compile Include="Code\AllJoyn\Devices\TurnOnOffDevice.cs" />
-    <Compile Include="Code\SmarthomeAdapter.cs" />
-    <Compile Include="Code\Station.cs" />
+    <Compile Include="Delegates\Delegates.cs" />
+    <Compile Include="Interfaces\IDisplayModule.cs" />
+    <Compile Include="Interfaces\IReaderModule.cs" />
+    <Compile Include="Interfaces\ITurnOnOffModule.cs" />
+    <Compile Include="Mocks\AirConditioner.cs" />
+    <Compile Include="Mocks\Display.cs" />
+    <Compile Include="Mocks\HumiditySensor.cs" />
+    <Compile Include="Mocks\Blinds.cs" />
+    <Compile Include="Mocks\Light.cs" />
+    <Compile Include="Mocks\LightSensor.cs" />
+    <Compile Include="Mocks\Termomethre.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Guybrush.SmartHome.Station.Core.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Guybrush.SmartHome.Modules\Guybrush.SmartHome.Modules.csproj">
-      <Project>{3F26B05D-F5B3-4F56-9ADB-791B7A360CF8}</Project>
-      <Name>Guybrush.SmartHome.Modules</Name>
-    </ProjectReference>
+    <Compile Include="TestInterface\ITestReadModule.cs" />
+    <EmbeddedResource Include="Properties\Guybrush.SmartHome.Modules.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

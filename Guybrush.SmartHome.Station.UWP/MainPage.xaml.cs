@@ -12,15 +12,7 @@ namespace Guybrush.SmartHome.Station.UWP
         public MainPage()
         {
             this.InitializeComponent();
-            LaunchStation();
-        }
-        Station station;
-        private void LaunchStation()
-        {
-            //SmartHome code
 
-            station = new Station();
-            station.Initialize();
 
         }
 

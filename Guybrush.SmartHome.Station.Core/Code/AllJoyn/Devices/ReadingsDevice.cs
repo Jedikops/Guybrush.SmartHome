@@ -1,12 +1,15 @@
 ﻿using AllJoyn.Dsb;
+using Guybrush.SmartHome.Modules.Interfaces;
+using Guybrush.SmartHome.Station.Core.AllJoyn.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Guybrush.SmartHome.Station.Core.Code.Devices
+namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
 {
     public class ReadingsDevice : AdapterDevice
     {
+
         private IList<ReaderInterface> _readers;
         private AdapterBusObject _busObject;
         public ReadingsDevice()
@@ -18,17 +21,24 @@ namespace Guybrush.SmartHome.Station.Core.Code.Devices
 
         }
 
-        public ReaderInterface RegisterReader(string readingTitle, string unit, string annotationKey, string annotationDescription)
+        public ReaderInterface RegisterReader(string readingTitle, string unit, string annotationKey, string annotationDescription, IReaderModule module)
         {
-            ReaderInterface reader = new ReaderInterface(readingTitle, unit, annotationKey, annotationDescription);
+
+            ReaderInterface reader = new ReaderInterface(readingTitle, unit, annotationKey, annotationDescription, module);
             _busObject.Interfaces.Add(reader.Interface);
             _readers.Add(reader);
             CreateEmitSignalChangedSignal();
+            reader.ValueChanged += Reader_ValueChanged;
             return reader;
 
         }
 
-        public void UpdateValue(string readingTitle, int value)
+        private void Reader_ValueChanged(object sender, int value)
+        {
+            UpdateValue(((ReaderInterface)sender).Name, value);
+        }
+
+        internal void UpdateValue(string readingTitle, int value)
         {
             var reader = _readers.FirstOrDefault(x => x.Name == readingTitle);
             if (reader != null)

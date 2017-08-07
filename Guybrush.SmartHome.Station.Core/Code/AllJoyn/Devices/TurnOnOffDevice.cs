@@ -1,34 +1,26 @@
 ﻿using AllJoyn.Dsb;
 using BridgeRT;
+using Guybrush.SmartHome.Modules.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Guybrush.SmartHome.Station.Devices
+namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
 {
     public class TurnOnOffDevice : AdapterDevice
     {
+        internal ITurnOnOffModule Module { get; private set; }
+        //private bool _currentValue;
+        internal AdapterInterface Interface { get; set; }
 
-        private bool _currentValue;
-        private AdapterInterface Interface { get; set; }
-
-        public bool CurrentValue
-        {
-            get { return _currentValue; }
-            set
-            {
-                _currentValue = value;
-                UpdateValue(_currentValue);
-            }
-        }
-
-        public TurnOnOffDevice(string Name, string VendorName, string Model, string Version, string SerialNumber, string Description)
+        public TurnOnOffDevice(string Name, string VendorName, string Model, string Version,
+            string SerialNumber, string Description, ITurnOnOffModule module)
             : base(Name, VendorName, Model, Version, SerialNumber, Description)
         {
-
+            Module = module;
             AdapterBusObject busObject = new AdapterBusObject(Name);
 
             Interface = new AdapterInterface("com.guybrush.devices.OnOffControl");
-            var attr = new AdapterAttribute("Status", false) { COVBehavior = BridgeRT.SignalBehavior.Always, Access = BridgeRT.E_ACCESS_TYPE.ACCESS_READ };
+            var attr = new AdapterAttribute("Status", false) { COVBehavior = SignalBehavior.Always, Access = E_ACCESS_TYPE.ACCESS_READ };
             attr.Annotations.Add("com.guybrush.devices.OnOffControl.Status", "The device status");
             Interface.Properties.Add(attr);
 
@@ -42,17 +34,20 @@ namespace Guybrush.SmartHome.Station.Devices
             BusObjects.Add(busObject);
             CreateEmitSignalChangedSignal();
 
-            _currentValue = false;
+            Module.Status = false;
+            Module.ValueChanged += Module_ValueChanged;
+        }
 
+        private void Module_ValueChanged(object sender, bool value)
+        {
+            UpdateValue(value);
         }
 
         private void ChangeStatus(AdapterMethod sender, IReadOnlyDictionary<string, object> inputParams, IDictionary<string, object> outputParams)
         {
             bool targetStatus = (bool)inputParams["TargetStatus"];
 
-            CurrentValue = targetStatus;
-
-
+            Module.Status = targetStatus;
         }
 
         public void UpdateValue(bool value)

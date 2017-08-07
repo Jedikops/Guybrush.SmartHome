@@ -21,6 +21,8 @@ namespace Guybrush.SmartHome.Station.UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+
         }
 
         /// <summary>
@@ -68,6 +70,7 @@ namespace Guybrush.SmartHome.Station.UWP
                 // Ensure the current window is active
                 Window.Current.Activate();
 
+                LaunchStation();
             }
         }
 
@@ -93,12 +96,26 @@ namespace Guybrush.SmartHome.Station.UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+
+            if (station != null)
+                station.Shutdown();
         }
 
 
 
         #endregion
 
+        Station station;
+        private void LaunchStation()
+        {
+            //SmartHome code
+
+            station = new Station();
+            station.Initialize();
+
+        }
 
     }
+
+
 }
