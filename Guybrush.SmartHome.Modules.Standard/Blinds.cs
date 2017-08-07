@@ -1,7 +1,7 @@
 ﻿using Guybrush.SmartHome.Modules.Delegates;
 using Guybrush.SmartHome.Modules.Interfaces;
 
-namespace GuyBrush.SmartHome.Modules.Mocks
+namespace Guybrush.SmartHome.Modules.Standard
 {
     public class Blinds : ITurnOnOffModule
     {

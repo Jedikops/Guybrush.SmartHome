@@ -1,14 +1,15 @@
 ﻿using AllJoyn.Dsb;
-using Guybrush.SmartHome.Modules.Mocks;
+using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Station.Core.AllJoyn.Devices;
+using Guybrush.SmartHome.Station.Core.Enums;
 using Guybrush.SmartHome.Station.Core.Helpers;
-using GuyBrush.SmartHome.Modules.Mocks;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Guybrush.SmartHome.Station
 {
+
+
     public class Station
     {
         IList<TurnOnOffDevice> _devices;
@@ -17,13 +18,15 @@ namespace Guybrush.SmartHome.Station
 
         SmarthomeAdapter _homeDevice;
 
+        public StationStatus Status { get; private set; }
+
         public Station()
         {
             _devices = new List<TurnOnOffDevice>();
-
+            Status = StationStatus.Down;
         }
 
-        public async void Initialize()
+        public async Task Initialize()
         {
             var config = new BridgeConfiguration(StationHelper.GetDeviceID(), "com.guybrush")
             {
@@ -36,56 +39,78 @@ namespace Guybrush.SmartHome.Station
             _homeDevice = new SmarthomeAdapter(config);
             await AllJoynDsbServiceManager.Current.StartAsync(_homeDevice);
 
+            _devices = new List<TurnOnOffDevice>();
             _readings = new ReadingsDevice();
-            _readings.RegisterReader("Light Intensity", "Lux", "Light intensity reading", "Current light intensity value in Lux", new LightSensor());
-            _readings.RegisterReader("Temperature", "C", "Temperature reading", "Current temperature value in Celcious", new Termomethre());
-            _readings.RegisterReader("Humidity", "%", "Humidity reading", "Current humidity", new HumiditySensor());
-            AllJoynDsbServiceManager.Current.AddDevice(_readings);
-
             _displays = new DisplaysDevice();
-            _displays.RegisterDisplay("Display", "Display device", "Display device last message", new Display());
+
+        }
+
+        public void RegisterDeviceTurnOnOffDevice(string name, string VendorName, string model, string version,
+            string serialNumber, string description, ITurnOnOffModule module)
+        {
+            _devices.Add(new TurnOnOffDevice(name, VendorName, model, version, serialNumber, description, module));
+        }
+
+
+        public void RegisterReadingDevice(string readingTitle, string unit, string annotationKey, string annotationDescription, IReaderModule module)
+        {
+
+            _readings.RegisterReader(readingTitle, unit, annotationKey, annotationDescription, module);
+
+        }
+
+        public void RegisterDisplayDevice(string displayDeviceName, string annotationKey, string annotationDescription, IDisplayModule module)
+        {
+
+            _displays.RegisterDisplay(displayDeviceName, annotationKey, annotationDescription, module);
+
+        }
+
+        public void Start()
+        {
+            foreach (var device in _devices)
+            {
+                AllJoynDsbServiceManager.Current.AddDevice(device);
+            }
+
+            AllJoynDsbServiceManager.Current.AddDevice(_readings);
             AllJoynDsbServiceManager.Current.AddDevice(_displays);
 
-            AllJoynDsbServiceManager.Current.AddDevice(new TurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", Guid.NewGuid().ToString(), "Guybrush Light", new Light()));
-            AllJoynDsbServiceManager.Current.AddDevice(new TurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", Guid.NewGuid().ToString(), "Guybrush air conditioner", new AirConditioner()));
-            AllJoynDsbServiceManager.Current.AddDevice(new TurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", Guid.NewGuid().ToString(), "Guybrush blinds", new Blinds()));
-
-            Test();
-
+            Status = StationStatus.Active;
         }
 
-        public async void Shutdown()
+        public async Task Shutdown()
         {
             await AllJoynDsbServiceManager.Current.ShutdownAsync();
+            Status = StationStatus.Down;
 
         }
-        private void Test()
-        {
-            var delay = Task.Run(async () =>
-            {
-                TurnOnOffDevice deva = null;
-                var rand = new Random();
-                while (true)
-                {
-                    await Task.Delay(15000);
-
-                    if (deva == null)
-                    {
-                        deva = new TurnOnOffDevice("Blinds 2", "Guybrush Inc", "Blinds 2", "1", Guid.NewGuid().ToString(), "Guybrush blinds 2", new Blinds());
-                        AllJoynDsbServiceManager.Current.AddDevice(deva);
-                    }
-                    else
-                    {
-                        _devices.Remove(deva);
-                        AllJoynDsbServiceManager.Current.RemoveDevice(deva);
-                        deva = null;
-
-                    }
-
-
-                }
-            });
-        }
+        //private void Test()
+        //{
+        //    var delay = Task.Run(async () =>
+        //    {
+        //        TurnOnOffDevice deva = null;
+        //        var rand = new Random();
+        //        while (true)
+        //        {
+        //            await Task.Delay(15000);
+        //
+        //            if (deva == null)
+        //            {
+        //                deva = new TurnOnOffDevice("Blinds 2", "Guybrush Inc", "Blinds 2", "1", Guid.NewGuid().ToString(), "Guybrush blinds 2", new Blinds());
+        //                AllJoynDsbServiceManager.Current.AddDevice(deva);
+        //            }
+        //            else
+        //            {
+        //                _devices.Remove(deva);
+        //                AllJoynDsbServiceManager.Current.RemoveDevice(deva);
+        //                deva = null;
+        //
+        //            }
+        //
+        //        }
+        //    });
+        //}
 
     }
 }

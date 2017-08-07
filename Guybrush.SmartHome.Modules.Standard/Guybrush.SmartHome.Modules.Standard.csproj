@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{89D149AF-0271-4CDB-BB95-A64B8683F5A5}</ProjectGuid>
+    <ProjectGuid>{CCC96381-0CD9-4FD9-8730-A5373ABD8C6A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Guybrush.SmartHome.Client.Data</RootNamespace>
-    <AssemblyName>Guybrush.SmartHome.Client.Data</AssemblyName>
+    <RootNamespace>Guybrush.SmartHome.Modules.Standard</RootNamespace>
+    <AssemblyName>Guybrush.SmartHome.Modules.Standard</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -107,19 +107,22 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\Observable.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="Enums\ConditionType.cs" />
-    <Compile Include="Models\AdapterInterface.cs" />
-    <Compile Include="Models\Condition.cs" />
-    <Compile Include="Models\Device.cs" />
-    <Compile Include="Models\Reading.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="AirConditioner.cs" />
+    <Compile Include="Blinds.cs" />
+    <Compile Include="Display.cs" />
+    <Compile Include="HumiditySensor.cs" />
+    <Compile Include="Light.cs" />
+    <Compile Include="LightSensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StationProxy.cs" />
-    <EmbeddedResource Include="Properties\Guybrush.SmartHome.Client.Data.rd.xml" />
+    <Compile Include="Termomethre.cs" />
+    <EmbeddedResource Include="Properties\Guybrush.SmartHome.Modules.Standard.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Guybrush.SmartHome.Modules\Guybrush.SmartHome.Modules.csproj">
+      <Project>{3f26b05d-f5b3-4f56-9adb-791b7a360cf8}</Project>
+      <Name>Guybrush.SmartHome.Modules</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

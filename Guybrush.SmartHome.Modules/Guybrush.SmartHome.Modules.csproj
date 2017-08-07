@@ -111,13 +111,6 @@
     <Compile Include="Interfaces\IDisplayModule.cs" />
     <Compile Include="Interfaces\IReaderModule.cs" />
     <Compile Include="Interfaces\ITurnOnOffModule.cs" />
-    <Compile Include="Mocks\AirConditioner.cs" />
-    <Compile Include="Mocks\Display.cs" />
-    <Compile Include="Mocks\HumiditySensor.cs" />
-    <Compile Include="Mocks\Blinds.cs" />
-    <Compile Include="Mocks\Light.cs" />
-    <Compile Include="Mocks\LightSensor.cs" />
-    <Compile Include="Mocks\Termomethre.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestInterface\ITestReadModule.cs" />
     <EmbeddedResource Include="Properties\Guybrush.SmartHome.Modules.rd.xml" />

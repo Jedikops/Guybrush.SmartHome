@@ -1,21 +1,27 @@
-﻿using Guybrush.SmartHome.Modules.Standard;
-using System;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace Guybrush.SmartHome.Station.UWP
+namespace Guybrush.SmartHome.Station.Tests
 {
-
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
-        #region App code
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -24,8 +30,6 @@ namespace Guybrush.SmartHome.Station.UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
-
         }
 
         /// <summary>
@@ -35,12 +39,14 @@ namespace Guybrush.SmartHome.Station.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -60,23 +66,13 @@ namespace Guybrush.SmartHome.Station.UWP
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
+            
+            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.CreateDefaultUI();
 
-            if (e.PrelaunchActivated == false)
-            {
-                if (rootFrame.Content == null)
-                {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-                // Ensure the current window is active
-                Window.Current.Activate();
+            // Ensure the current window is active
+            Window.Current.Activate();
 
-                LaunchStation();
-
-
-            }
+            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(e.Arguments);
         }
 
         /// <summary>
@@ -101,49 +97,6 @@ namespace Guybrush.SmartHome.Station.UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
-
-            ShutdownStation();
-
         }
-
-        #endregion
-
-
-        Station _station;
-        private void LaunchStation()
-        {
-            //SmartHome code
-            Task.Run(async () =>
-            {
-                _station = new Station();
-                await _station.Initialize();
-
-                _station.RegisterDeviceTurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", Guid.NewGuid().ToString(), "Guybrush Light", new Light());
-                _station.RegisterDeviceTurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", Guid.NewGuid().ToString(), "Guybrush air conditioner", new AirConditioner());
-                _station.RegisterDeviceTurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", Guid.NewGuid().ToString(), "Guybrush blinds", new Blinds());
-
-                _station.RegisterReadingDevice("Light Intensity", "Lux", "Light intensity reading", "Current light intensity value in Lux", new LightSensor());
-                _station.RegisterReadingDevice("Temperature", "C", "Temperature reading", "Current temperature value in Celcious", new Termomethre());
-                _station.RegisterReadingDevice("Humidity", "%", "Humidity reading", "Current humidity", new HumiditySensor());
-
-                _station.RegisterDisplayDevice("Display", "Display device", "Display device last message", new Display());
-
-                _station.Start();
-            }).Wait();
-
-
-        }
-
-        private void ShutdownStation()
-        {
-            Task.Run(async () =>
-            {
-                if (_station != null)
-                    await _station.Shutdown();
-            }).Wait();
-        }
-
     }
-
-
 }

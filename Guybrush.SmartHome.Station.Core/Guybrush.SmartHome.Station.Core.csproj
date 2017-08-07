@@ -110,6 +110,7 @@
     <Compile Include="Code\AllJoyn\Devices\DisplaysDevice.cs" />
     <Compile Include="Code\AllJoyn\Interfaces\DisplayInterface.cs" />
     <Compile Include="Code\AllJoyn\Devices\ReadingsDevice.cs" />
+    <Compile Include="Code\Enums\StationStatus.cs" />
     <Compile Include="Code\Helpers\StationHelper.cs" />
     <Compile Include="Code\AllJoyn\Interfaces\ReaderInterface.cs" />
     <Compile Include="Code\AllJoyn\Devices\TurnOnOffDevice.cs" />

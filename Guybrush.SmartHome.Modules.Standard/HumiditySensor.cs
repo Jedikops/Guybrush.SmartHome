@@ -2,10 +2,11 @@
 using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Modules.TestInterface;
 
-namespace GuyBrush.SmartHome.Modules.Mocks
+namespace Guybrush.SmartHome.Modules.Standard
 {
-    public class Termomethre : IReaderModule, ITestReadModule
+    public class HumiditySensor : IReaderModule, ITestReadModule
     {
+
         private int _value;
         public int Value
         {
@@ -18,13 +19,11 @@ namespace GuyBrush.SmartHome.Modules.Mocks
             }
         }
 
-        private readonly string _unit = "C";
+        private readonly string _unit = "%";
 
-        public string Unit
-        {
-            get { return _unit; }
-        }
+        public string Unit { get { return _unit; } }
 
         public event ReaderEventArgs ValueChanged;
+
     }
 }

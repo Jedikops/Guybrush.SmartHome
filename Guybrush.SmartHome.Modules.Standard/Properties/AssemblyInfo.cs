@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GuyBrush.SmartHome.Station.Devices")]
+[assembly: AssemblyTitle("Guybrush.SmartHome.Modules.Standard")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GuyBrush.SmartHome.Station.Devices")]
+[assembly: AssemblyProduct("Guybrush.SmartHome.Modules.Standard")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

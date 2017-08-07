@@ -127,6 +127,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Guybrush.SmartHome.Modules.Standard\Guybrush.SmartHome.Modules.Standard.csproj">
+      <Project>{CCC96381-0CD9-4FD9-8730-A5373ABD8C6A}</Project>
+      <Name>Guybrush.SmartHome.Modules.Standard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Guybrush.SmartHome.Modules\Guybrush.SmartHome.Modules.csproj">
+      <Project>{3F26B05D-F5B3-4F56-9ADB-791B7A360CF8}</Project>
+      <Name>Guybrush.SmartHome.Modules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Guybrush.SmartHome.Station.Core\Guybrush.SmartHome.Station.Core.csproj">
       <Project>{d4d1300f-00f5-4498-8e97-72150b7cb991}</Project>
       <Name>Guybrush.SmartHome.Station.Core</Name>

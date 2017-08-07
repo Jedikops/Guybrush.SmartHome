@@ -1,26 +1,26 @@
 ﻿using Guybrush.SmartHome.Modules.Delegates;
 using Guybrush.SmartHome.Modules.Interfaces;
 
-namespace GuyBrush.SmartHome.Modules.Mocks
+namespace Guybrush.SmartHome.Modules.Standard
 {
-    public class Light : ITurnOnOffModule
+    public class Display : IDisplayModule
     {
-        private bool _status;
-        public bool Status
+        string _text = "Hello!";
+        public string Text
         {
             get
             {
-                return _status;
+                return _text;
             }
 
             set
             {
-                _status = value;
+                _text = value;
                 if (ValueChanged != null)
                     ValueChanged(this, value);
             }
         }
 
-        public event DeviceOnOffEventArgs ValueChanged;
+        public event DisplayEventArgs ValueChanged;
     }
 }

@@ -12,12 +12,12 @@ namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
         //private bool _currentValue;
         internal AdapterInterface Interface { get; set; }
 
-        public TurnOnOffDevice(string Name, string VendorName, string Model, string Version,
-            string SerialNumber, string Description, ITurnOnOffModule module)
-            : base(Name, VendorName, Model, Version, SerialNumber, Description)
+        public TurnOnOffDevice(string name, string vendorName, string model, string version,
+            string serialNumber, string description, ITurnOnOffModule module)
+            : base(name, vendorName, model, version, serialNumber, description)
         {
             Module = module;
-            AdapterBusObject busObject = new AdapterBusObject(Name);
+            AdapterBusObject busObject = new AdapterBusObject(name);
 
             Interface = new AdapterInterface("com.guybrush.devices.OnOffControl");
             var attr = new AdapterAttribute("Status", false) { COVBehavior = SignalBehavior.Always, Access = E_ACCESS_TYPE.ACCESS_READ };
