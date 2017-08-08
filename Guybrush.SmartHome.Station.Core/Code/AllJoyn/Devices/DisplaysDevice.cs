@@ -17,7 +17,7 @@ namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
         public DisplaysDevice()
             : base("Displays", "Guybrush Inc", "Displays", "1", Guid.NewGuid().ToString(), "Guybrush display collector device.")
         {
-            _busObject = new AdapterBusObject("Readings");
+            _busObject = new AdapterBusObject("Displays");
             _displays = new List<DisplayInterface>();
             BusObjects.Add(_busObject);
 

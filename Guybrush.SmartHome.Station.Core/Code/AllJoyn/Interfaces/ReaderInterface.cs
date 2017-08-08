@@ -9,7 +9,7 @@ namespace Guybrush.SmartHome.Station.Core.AllJoyn.Interfaces
     {
         public string Name { get; private set; }
         public IReaderModule Module { get; private set; }
-        public AdapterInterface Interface { get; private set; }
+        public AdapterInterface Interface { get; set; }
         public ReaderInterface(string readingTitle, string unit, string annotationKey, string annotationDescription, IReaderModule module)
         {
             Name = readingTitle;
