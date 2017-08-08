@@ -1,15 +1,17 @@
 ﻿using DeviceProviders;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Guybrush.SmartHome.Client.Data.Models
 {
     public class Reading
     {
 
-        private readonly IInterface _iface;
-        private readonly IProperty _propTitle;
-        private readonly IProperty _propValue;
-        private readonly IProperty _propUnit;
+        private IInterface _iface;
+        private IProperty _propTitle;
+        private IProperty _propValue;
+        private IProperty _propUnit;
 
 
         private string _title;
@@ -39,67 +41,57 @@ namespace Guybrush.SmartHome.Client.Data.Models
 
         public Reading(IInterface iface)
         {
-            _iface = iface;
-            _propTitle = iface.Properties.First(x => x.Name == "Title");
-            _propValue = iface.Properties.First(x => x.Name == "Value");
-            _propUnit = iface.Properties.First(x => x.Name == "Unit");
+            Task.Run(async () =>
+            {
+                _iface = iface;
+                _propTitle = iface.Properties.First(x => x.Name == "Title");
+                _propValue = iface.Properties.First(x => x.Name == "Value");
+                _propUnit = iface.Properties.First(x => x.Name == "Unit");
 
-            _propValue.ValueChanged += _propValue_ValueChanged;
-            _propUnit.ValueChanged += _propUnit_ValueChanged;
-            LoadValues();
+                _propValue.ValueChanged += _propValue_ValueChanged;
+                _propUnit.ValueChanged += _propUnit_ValueChanged;
+                await LoadValues();
+            }).Wait();
         }
 
-        private void LoadValues()
+        private async Task LoadValues()
         {
-            _propTitle.ReadValueAsync().Completed += (info, status) =>
-            {
-                var result = info.GetResults();
-                _title = (string)result.Value;
-            };
 
-            _propUnit.ReadValueAsync().Completed += (info, status) =>
+            var title = await _propTitle.ReadValueAsync();
+            _title = (string)title.Value;
+
+
+            var unit = await _propUnit.ReadValueAsync();
+            _unit = (string)unit.Value;
+
+            var value = await _propValue.ReadValueAsync();
+            _value = (int)value.Value;
+        }
+
+        private async void _propUnit_ValueChanged(IProperty sender, object args)
+        {
+            var result = await _propUnit.ReadValueAsync();
+
+            lock (Context.Current.Locks["Readings"])
             {
-                var result = info.GetResults();
                 _unit = (string)result.Value;
+                int index = Context.Current.Readings.IndexOf(this);
+                Context.Current.Readings[index] = this;
+            }
 
-            };
-            _propValue.ReadValueAsync().Completed += (info, status) =>
+
+        }
+
+        private async void _propValue_ValueChanged(IProperty sender, object args)
+        {
+            var result = await _propValue.ReadValueAsync();
+            lock (Context.Current.Locks["Readings"])
             {
-                var result = info.GetResults();
                 _value = (int)result.Value;
+                int index = Context.Current.Readings.IndexOf(this);
+                Context.Current.Readings[index] = this;
+            }
 
-            };
-        }
-
-        private void _propUnit_ValueChanged(IProperty sender, object args)
-        {
-            _propUnit.ReadValueAsync().Completed += (info, status) =>
-            {
-                var result = info.GetResults();
-
-                lock (Context.Current.Locks["Readings"])
-                {
-                    _unit = (string)result.Value;
-                    int index = Context.Current.Readings.IndexOf(this);
-                    Context.Current.Readings[index] = this;
-                }
-            };
-
-        }
-
-        private void _propValue_ValueChanged(IProperty sender, object args)
-        {
-            _propValue.ReadValueAsync().Completed += (info, status) =>
-            {
-                var result = info.GetResults();
-
-                lock (Context.Current.Locks["Readings"])
-                {
-                    _value = (int)result.Value;
-                    int index = Context.Current.Readings.IndexOf(this);
-                    Context.Current.Readings[index] = this;
-                }
-            };
         }
 
     }

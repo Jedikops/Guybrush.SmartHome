@@ -1,15 +1,16 @@
 ﻿using DeviceProviders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 namespace Guybrush.SmartHome.Client.Data.Models
 {
 
     public class Device
     {
-        private readonly IInterface _iface;
-        private readonly IProperty _prop;
-        private readonly IMethod _method;
+        private IInterface _iface;
+        private IProperty _prop;
+        private IMethod _method;
 
 
         private bool _status;
@@ -35,55 +36,51 @@ namespace Guybrush.SmartHome.Client.Data.Models
 
         public Device(IInterface iface, string name)
         {
-            _title = name;
-            _status = false;
-
-            _iface = iface;
-            _prop = iface.Properties.FirstOrDefault(x => x.Name == "Status");
-            if (_prop != null)
+            Task.Run(async () =>
             {
-                _prop.ValueChanged += _prop_ValueChanged;
-                _method = iface.Methods.First(x => x.Name == "Switch");
+                _title = name;
+                _status = false;
 
-                LoadValue();
-            }
-        }
-
-
-
-        public void LoadValue()
-        {
-            _prop.ReadValueAsync().Completed += (info, status) =>
-            {
-                var result = info.GetResults();
-                if (result.Value != null)
-                    _status = (bool)result.Value;
-
-            };
-        }
-
-        private void _prop_ValueChanged(IProperty sender, object args)
-        {
-            _prop.ReadValueAsync().Completed += (info, status) =>
-            {
-                var result = info.GetResults();
-
-                lock (Context.Current.Locks["Devices"])
+                _iface = iface;
+                _prop = iface.Properties.FirstOrDefault(x => x.Name == "Status");
+                if (_prop != null)
                 {
-                    _status = (bool)result.Value;
-                    //var newMe = new Device(_iface, _title);
-                    int index = Context.Current.Devices.IndexOf(this);
-                    Context.Current.Devices[index] = this;
+                    _prop.ValueChanged += _prop_ValueChanged;
+                    _method = iface.Methods.First(x => x.Name == "Switch");
+                    await LoadValue();
                 }
-            };
+            });
         }
 
-        public void UpdateValue(bool value)
+
+
+        public async Task LoadValue()
         {
-            _method.InvokeAsync(new List<object> { value }).Completed += (info, status) =>
+            var result = await _prop.ReadValueAsync();
+            if (result.Value != null)
+                _status = (bool)result.Value;
+
+        }
+
+        private async void _prop_ValueChanged(IProperty sender, object args)
+        {
+            var result = await _prop.ReadValueAsync();
+
+            lock (Context.Current.Locks["Devices"])
             {
-                LoadValue();
-            };
+                _status = (bool)result.Value;
+                int index = Context.Current.Devices.IndexOf(this);
+                Context.Current.Devices[index] = this;
+            }
+
+        }
+
+        public async void UpdateValue(bool value)
+        {
+            var result = await _method.InvokeAsync(new List<object> { value });
+            if (result.Status == AllJoynStatus.Succeeded)
+                await LoadValue();
+
 
         }
     }

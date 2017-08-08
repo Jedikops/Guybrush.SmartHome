@@ -55,18 +55,18 @@ namespace Guybrush.SmartHome.Station.UWP
 
                 while (true)
                 {
-                    await Task.Delay(15000);
+                    await Task.Delay(5000);
 
-                    //if (blind2Added)
-                    //{
-                    //    Station.UnregisterTurnOnOffDevice("Blinds 2", blinds.Id);
-                    //    blind2Added = false;
-                    //}
-                    //else
-                    //{
-                    //    Station.RegisterTurnOnOffDevice("Blinds 2", "Guybrush Inc", "Blinds 2", "1", blinds.Id.ToString(), "Guybrush blinds 2", blinds);
-                    //    blind2Added = true;
-                    //}
+                    if (blind2Added)
+                    {
+                        Station.UnregisterTurnOnOffDevice("Blinds 2", blinds.Id);
+                        blind2Added = false;
+                    }
+                    else
+                    {
+                        Station.RegisterTurnOnOffDevice("Blinds 2", "Guybrush Inc", "Blinds 2", "1", blinds.Id.ToString(), "Guybrush blinds 2", blinds);
+                        blind2Added = true;
+                    }
 
                     if (reading2Added)
                     {
