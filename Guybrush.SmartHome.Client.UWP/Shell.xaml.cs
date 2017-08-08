@@ -16,7 +16,7 @@ namespace Guybrush.SmartHome.Client.UWP
         public Shell()
         {
             this.InitializeComponent();
-
+            Content.Navigate(typeof(DevicesPage));
         }
 
 

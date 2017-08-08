@@ -9,7 +9,6 @@ namespace Guybrush.SmartHome.Client.Data.Models
     {
 
         private IInterface _iface;
-        private IProperty _propTitle;
         private IProperty _propValue;
         private IProperty _propUnit;
 
@@ -39,12 +38,13 @@ namespace Guybrush.SmartHome.Client.Data.Models
         }
 
 
-        public Reading(IInterface iface)
+        public Reading(IInterface iface, string title)
         {
             Task.Run(async () =>
             {
+                _title = title;
                 _iface = iface;
-                _propTitle = iface.Properties.First(x => x.Name == "Title");
+
                 _propValue = iface.Properties.First(x => x.Name == "Value");
                 _propUnit = iface.Properties.First(x => x.Name == "Unit");
 
@@ -56,10 +56,6 @@ namespace Guybrush.SmartHome.Client.Data.Models
 
         private async Task LoadValues()
         {
-
-            var title = await _propTitle.ReadValueAsync();
-            _title = (string)title.Value;
-
 
             var unit = await _propUnit.ReadValueAsync();
             _unit = (string)unit.Value;

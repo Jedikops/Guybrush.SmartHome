@@ -45,13 +45,13 @@ namespace Guybrush.SmartHome.Station.UWP
                 Station.RegisterTurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", air.Id.ToString(), "Guybrush air conditioner", air);
                 Station.RegisterTurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", blinds.Id.ToString(), "Guybrush blinds", blinds);
 
-                Station.RegisterDisplayDevice("Display", "Guybrush Inc", "Display", "1", disp.Id.ToString(), "Guybrush display device", disp);
+
 
                 Station.RegisterReadingDevice("Light Intensity", "Lux", "Guybrush Inc", "Light Intensity", "1", ligsens.Id.ToString(), "Guybrush light intensity sensor", ligsens);
                 Station.RegisterReadingDevice("Temperature", "C", "Guybrush Inc", "Temperature", "1", term.Id.ToString(), "Guybrush termomether", term);
                 Station.RegisterReadingDevice("Humidity", "%", "Guybrush Inc", "Humidity", "1", humi.Id.ToString(), "Guybrush humidity sensor", humi);
 
-
+                Station.RegisterDisplayDevice("Display", "Guybrush Inc", "Display", "1", disp.Id.ToString(), "Guybrush display device", disp);
 
 
             }).Wait();
@@ -86,12 +86,15 @@ namespace Guybrush.SmartHome.Station.UWP
                     }
                     else
                     {
-                        Station.RegisterReadingDevice("Light Intensity", "Lux", "Guybrush Inc", "Light Intensity", "1", lightSens.Id.ToString(), "Guybrush light intensity sensor", lightSens);
+                        Station.RegisterReadingDevice("Light Intensity 2", "Lux", "Guybrush Inc", "Light Intensity", "1", lightSens.Id.ToString(), "Guybrush light intensity sensor", lightSens);
                         reading2Added = true;
                     }
 
                     light.Status = !light.Status;
-                    ligsens.Value += 15;
+                    if (ligsens.Value > 100)
+                        ligsens.Value = 0;
+                    else
+                        ligsens.Value += 15;
 
                     if (disp.Text == "Chupacabra")
                         disp.Text = "Zlo";

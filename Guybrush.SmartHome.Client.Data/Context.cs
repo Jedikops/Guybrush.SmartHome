@@ -6,7 +6,7 @@ namespace Guybrush.SmartHome.Client.Data
 {
     public class Context
     {
-        public static Context Current = new Context();
+        public static Context Current;
 
         private ObservableCollection<Device> _devices;
         private ObservableCollection<Reading> _readings;
@@ -24,6 +24,12 @@ namespace Guybrush.SmartHome.Client.Data
         {
             get { return _readings; }
             private set { _readings = value; }
+        }
+
+        public static void Initialize()
+        {
+            if (Current == null)
+                Current = new Context();
         }
 
         private Context()

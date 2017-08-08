@@ -1,6 +1,5 @@
 ﻿using DeviceProviders;
 using Guybrush.SmartHome.Client.Data.Models;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Guybrush.SmartHome.Client.Data
@@ -35,20 +34,25 @@ namespace Guybrush.SmartHome.Client.Data
             {
                 lock (Context.Current.Locks["Global"])
                 {
-                    if (name != "Readings")
+
+                    var device = Context.Current.Devices.FirstOrDefault(x => x.Title == name);
+                    var reading = Context.Current.Readings.FirstOrDefault(x => x.Title == name);
+                    if (device != null)
                     {
                         lock (Context.Current.Locks["Devices"])
                         {
-                            var device = Context.Current.Devices.FirstOrDefault(x => x.Title == name);
+
                             if (device != null)
                                 Context.Current.Devices.Remove(device);
                         }
                     }
-                    else
+                    else if (reading != null)
                     {
                         lock (Context.Current.Locks["Readings"])
                         {
-                            Context.Current.Readings.Clear();
+                            var reader = Context.Current.Readings.FirstOrDefault(x => x.Title == name);
+                            if (reader != null)
+                                Context.Current.Readings.Remove(reader);
                         }
                     }
                 }
@@ -63,59 +67,33 @@ namespace Guybrush.SmartHome.Client.Data
             var appName = args.Service.AboutData?.AppName;
             if (appName == "Guybrush Station")
             {
+                var obj = args.Service.Objects.FirstOrDefault();
 
-                if (name == "Readings")
+                var readInterface = obj.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.devices.reader");
+                var deviceInterface = obj.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.devices.onoffcontrol");
+                if (readInterface != null)
                 {
-                    IBusObject objStation = args.Service.Objects.FirstOrDefault();
-                    if (objStation != null)
+                    lock (Context.Current.Locks["Readings"])
                     {
-                        List<IInterface> ifaces = objStation.Interfaces.Where(x => x.Name.Contains("com.guybrush.station.readings")).ToList();
-                        if (ifaces.Count > 0)
+                        //if (Context.Current.Readings.All(x => x.Title != name))
                         {
-                            foreach (var iface in ifaces)
-                            {
-                                lock (Context.Current.Locks["Readings"])
-                                {
-
-                                    var reading = new Reading(iface);
-
-                                    Context.Current.Readings.Add(reading);
-                                }
-
-                            }
+                            var reading = new Reading(readInterface, name);
+                            Context.Current.Readings.Add(reading);
                         }
                     }
-
                 }
-                else
+                else if (deviceInterface != null)
                 {
-                    var deviceObj = args.Service.Objects.FirstOrDefault();
-                    if (deviceObj != null)
+                    lock (Context.Current.Locks["Devices"])
                     {
-                        var iface = deviceObj.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.devices.OnOffControl");
-                        if (iface != null)
+                        //if (Context.Current.Devices.All(x => x.Title != name))
                         {
-                            //Add method delegate
-
-                            var prop = iface.Properties.FirstOrDefault(x => x.Name == "Status");
-                            if (prop != null)
-                            {
-
-
-                                lock (Context.Current.Locks["Devices"])
-                                {
-                                    var device = new Device(iface, name);
-
-                                    Context.Current.Devices.Add(device);
-                                }
-
-
-                            }
+                            var device = new Device(deviceInterface, name);
+                            Context.Current.Devices.Add(device);
                         }
-
                     }
-
                 }
+
             }
 
             System.Diagnostics.Debug.WriteLine($"Found device '{name}' : ID = {id}");

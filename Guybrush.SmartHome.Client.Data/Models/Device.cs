@@ -39,7 +39,6 @@ namespace Guybrush.SmartHome.Client.Data.Models
             Task.Run(async () =>
             {
                 _title = name;
-                _status = false;
 
                 _iface = iface;
                 _prop = iface.Properties.FirstOrDefault(x => x.Name == "Status");
