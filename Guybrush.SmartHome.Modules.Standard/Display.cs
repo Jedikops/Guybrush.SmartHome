@@ -27,11 +27,10 @@ namespace Guybrush.SmartHome.Modules.Standard
             set
             {
                 _text = value;
-                if (ValueChanged != null)
-                    ValueChanged(this, value);
+                TextChanged?.Invoke(this, value);
             }
         }
 
-        public event DisplayEventArgs ValueChanged;
+        public event DisplayEventArgs TextChanged;
     }
 }

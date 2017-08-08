@@ -38,7 +38,7 @@ namespace Guybrush.SmartHome.Station.Tests
             var lightSens = new LightSensor();
             _station.RegisterReadingDevice("Light Intensity", "Lux", "Light intensity reading", "Current light intensity value in Lux", lightSens);
 
-            Assert.IsTrue(_station.Readings.Any(x => x.Equals(lightSens)));
+            Assert.IsTrue(_station.Readers.Any(x => x.Equals(lightSens)));
 
         }
 

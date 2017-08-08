@@ -11,7 +11,8 @@ namespace Guybrush.SmartHome.Modules.Interfaces
         string Unit { get; }
 
         //This event must be triggered as soon as value changes 
-        event ReaderEventArgs ValueChanged;
+        event ReaderValueEventArgs ValueChanged;
+        event ReaderUnitEventArgs UnitChanged;
 
     }
 }

@@ -32,7 +32,7 @@ namespace Guybrush.SmartHome.Station.Tests.Mocks
 
         public string Unit { get { return _unit; } }
 
-        public event ReaderEventArgs ValueChanged;
+        public event ReaderValueEventArgs ValueChanged;
 
     }
 }

@@ -24,16 +24,23 @@ namespace Guybrush.SmartHome.Modules.Standard
             set
             {
                 _value = value;
-                if (ValueChanged != null)
-                    ValueChanged(this, value);
+                ValueChanged?.Invoke(this, value);
             }
         }
 
-        private readonly string _unit = "%";
+        private string _unit = "%";
+        public string Unit
+        {
+            get { return _unit; }
+            set
+            {
+                _unit = value;
+                UnitChanged?.Invoke(this, value);
+            }
+        }
 
-        public string Unit { get { return _unit; } }
-
-        public event ReaderEventArgs ValueChanged;
+        public event ReaderValueEventArgs ValueChanged;
+        public event ReaderUnitEventArgs UnitChanged;
 
     }
 }

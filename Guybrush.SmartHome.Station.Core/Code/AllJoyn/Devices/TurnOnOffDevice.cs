@@ -19,9 +19,9 @@ namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
             Module = module;
             AdapterBusObject busObject = new AdapterBusObject(name);
 
-            Interface = new AdapterInterface("com.guybrush.devices.OnOffControl");
-            var attr = new AdapterAttribute("Status", false) { COVBehavior = SignalBehavior.Always, Access = E_ACCESS_TYPE.ACCESS_READ };
-            attr.Annotations.Add("com.guybrush.devices.OnOffControl.Status", "The device status");
+            Interface = new AdapterInterface("com.guybrush.devices.onoffcontrol");
+            var attr = new AdapterAttribute("Status", module.Status) { COVBehavior = SignalBehavior.Always, Access = E_ACCESS_TYPE.ACCESS_READ };
+            attr.Annotations.Add("com.guybrush.devices.onoffcontrol.status", "The device status");
             Interface.Properties.Add(attr);
 
             List<IAdapterValue> inputs = new List<IAdapterValue>(1);
@@ -34,32 +34,23 @@ namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
             BusObjects.Add(busObject);
             CreateEmitSignalChangedSignal();
 
-            Module.Status = false;
             Module.ValueChanged += Module_ValueChanged;
         }
 
         private void Module_ValueChanged(object sender, bool value)
         {
-            UpdateValue(value);
+            var attr = Interface.Properties.FirstOrDefault(a => a.Value.Name == "Status");
+            if (attr.Value.Data != (object)value)
+            {
+                attr.Value.Data = value;
+                SignalChangeOfAttributeValue(Interface, attr);
+            };
         }
 
         private void ChangeStatus(AdapterMethod sender, IReadOnlyDictionary<string, object> inputParams, IDictionary<string, object> outputParams)
         {
             bool targetStatus = (bool)inputParams["TargetStatus"];
-
             Module.Status = targetStatus;
-        }
-
-        public void UpdateValue(bool value)
-        {
-            var attr = Interface.Properties.Where(a => a.Value.Name == "Status").First();
-
-
-            if (attr.Value.Data != (object)value)
-            {
-                attr.Value.Data = value;
-                SignalChangeOfAttributeValue(Interface, attr);
-            }
         }
     }
 }

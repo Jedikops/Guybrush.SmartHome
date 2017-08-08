@@ -35,6 +35,6 @@ namespace Guybrush.SmartHome.Station.Tests.Mocks
             get { return _unit; }
         }
 
-        public event ReaderEventArgs ValueChanged;
+        public event ReaderValueEventArgs ValueChanged;
     }
 }
