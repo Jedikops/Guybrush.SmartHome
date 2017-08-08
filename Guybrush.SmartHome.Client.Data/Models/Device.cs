@@ -49,7 +49,7 @@ namespace Guybrush.SmartHome.Client.Data.Models
                     _method = iface.Methods.First(x => x.Name == "Switch");
                     await LoadValue();
                 }
-            });
+            }).Wait();
         }
 
 

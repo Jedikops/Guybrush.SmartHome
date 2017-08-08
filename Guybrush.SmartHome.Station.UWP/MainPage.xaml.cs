@@ -11,6 +11,15 @@ namespace Guybrush.SmartHome.Station.UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        Light light = new Light();
+        Blinds blinds = new Blinds();
+        AirConditioner air = new AirConditioner();
+
+        Termomethre term = new Termomethre();
+        HumiditySensor humi = new HumiditySensor();
+        LightSensor ligsens = new LightSensor();
+        Display disp = new Display();
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -33,15 +42,15 @@ namespace Guybrush.SmartHome.Station.UWP
                 Station = new Station();
                 await Station.Initialize();
 
-                Station.RegisterTurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", Guid.NewGuid().ToString(), "Guybrush Light", new Light());
-                Station.RegisterTurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", Guid.NewGuid().ToString(), "Guybrush air conditioner", new AirConditioner());
-                Station.RegisterTurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", Guid.NewGuid().ToString(), "Guybrush blinds", new Blinds());
+                Station.RegisterTurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", Guid.NewGuid().ToString(), "Guybrush Light", light);
+                Station.RegisterTurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", Guid.NewGuid().ToString(), "Guybrush air conditioner", air);
+                Station.RegisterTurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", Guid.NewGuid().ToString(), "Guybrush blinds", blinds);
 
-                Station.RegisterReadingDevice("Light Intensity", "Lux", "Light intensity reading", "Current light intensity value in Lux", new LightSensor());
-                Station.RegisterReadingDevice("Temperature", "C", "Temperature reading", "Current temperature value in Celcious", new Termomethre());
-                Station.RegisterReadingDevice("Humidity", "%", "Humidity reading", "Current humidity", new HumiditySensor());
+                Station.RegisterReadingDevice("Light Intensity", "Lux", "Light intensity reading", "Current light intensity value in Lux", ligsens);
+                Station.RegisterReadingDevice("Temperature", "C", "Temperature reading", "Current temperature value in Celcious", term);
+                Station.RegisterReadingDevice("Humidity", "%", "Humidity reading", "Current humidity", humi);
 
-                Station.RegisterDisplayDevice("Display", "Display device", "Display device last message", new Display());
+                Station.RegisterDisplayDevice("Display", "Display device", "Display device last message", disp);
 
             }).Wait();
 
@@ -78,6 +87,8 @@ namespace Guybrush.SmartHome.Station.UWP
                         Station.RegisterReadingDevice("Light Intensity 2", "Lux", "Light intensity reading", "Current light intensity value in Lux", lightSens);
                         reading2Added = true;
                     }
+
+                    light.Status = !light.Status;
 
                 }
             });
