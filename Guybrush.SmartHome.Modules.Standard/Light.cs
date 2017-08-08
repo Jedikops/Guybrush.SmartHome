@@ -1,10 +1,11 @@
 ﻿using Guybrush.SmartHome.Modules.Delegates;
 using Guybrush.SmartHome.Modules.Interfaces;
+using Guybrush.SmartHome.Station.Core.Base;
 using System;
 
 namespace Guybrush.SmartHome.Modules.Standard
 {
-    public class Light : ITurnOnOffModule
+    public class Light : Observable, ITurnOnOffModule
     {
         private Guid _id = Guid.NewGuid();
         public Guid Id
@@ -25,8 +26,11 @@ namespace Guybrush.SmartHome.Modules.Standard
 
             set
             {
+
                 _status = value;
                 ValueChanged?.Invoke(this, value);
+                OnPropertyChanged();
+
             }
         }
 

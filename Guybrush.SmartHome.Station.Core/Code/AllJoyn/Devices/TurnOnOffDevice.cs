@@ -1,8 +1,10 @@
 ﻿using AllJoyn.Dsb;
 using BridgeRT;
 using Guybrush.SmartHome.Modules.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI.Core;
 
 namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
 {
@@ -47,10 +49,14 @@ namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
             };
         }
 
-        private void ChangeStatus(AdapterMethod sender, IReadOnlyDictionary<string, object> inputParams, IDictionary<string, object> outputParams)
+        private async void ChangeStatus(AdapterMethod sender, IReadOnlyDictionary<string, object> inputParams, IDictionary<string, object> outputParams)
         {
-            bool targetStatus = (bool)inputParams["TargetStatus"];
-            Module.Status = targetStatus;
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                  () =>
+                  {
+                      bool targetStatus = (bool)inputParams["TargetStatus"];
+                      Module.Status = targetStatus;
+                  });
         }
     }
 }

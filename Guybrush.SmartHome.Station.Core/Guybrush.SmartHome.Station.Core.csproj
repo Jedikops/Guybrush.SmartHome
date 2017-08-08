@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Code\AllJoyn\Devices\DisplayDevice.cs" />
     <Compile Include="Code\AllJoyn\Devices\ReaderDevice.cs" />
+    <Compile Include="Code\Base\Observable.cs" />
     <Compile Include="Code\Enums\StationStatus.cs" />
     <Compile Include="Code\Helpers\StationHelper.cs" />
     <Compile Include="Code\AllJoyn\Devices\TurnOnOffDevice.cs" />

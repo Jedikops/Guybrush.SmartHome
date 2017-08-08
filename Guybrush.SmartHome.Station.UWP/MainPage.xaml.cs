@@ -1,5 +1,9 @@
 ﻿using Guybrush.SmartHome.Modules.Standard;
+using Guybrush.SmartHome.Station.UWP.Code;
+using System;
 using System.Threading.Tasks;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -10,6 +14,8 @@ namespace Guybrush.SmartHome.Station.UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        StationViewModel ViewModel;
+
         Light light = new Light();
         Blinds blinds = new Blinds();
         AirConditioner air = new AirConditioner();
@@ -22,10 +28,20 @@ namespace Guybrush.SmartHome.Station.UWP
         public MainPage()
         {
             this.InitializeComponent();
-
+            this.Loaded += Devices_Loaded;
             LaunchStation();
 
         }
+
+        private void Devices_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel = new StationViewModel();
+            ViewModel.light = light;
+            ViewModel.blinds = blinds;
+            ViewModel.air = air;
+            Bindings.Update();
+        }
+
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
@@ -90,16 +106,19 @@ namespace Guybrush.SmartHome.Station.UWP
                         reading2Added = true;
                     }
 
-                    light.Status = !light.Status;
-                    if (ligsens.Value > 100)
-                        ligsens.Value = 0;
-                    else
-                        ligsens.Value += 15;
+                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                  () =>
+                  {
+                      light.Status = !light.Status;
+                      if (ligsens.Value > 100)
+                          ligsens.Value = 0;
+                      else
+                          ligsens.Value += 15;
 
-                    if (disp.Text == "Chupacabra")
-                        disp.Text = "Zlo";
-                    else disp.Text = "Chupacabra";
-
+                      if (disp.Text == "Chupacabra")
+                          disp.Text = "Zlo";
+                      else disp.Text = "Chupacabra";
+                  });
                 }
             });
         }

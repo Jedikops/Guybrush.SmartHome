@@ -1,10 +1,11 @@
 ﻿using Guybrush.SmartHome.Modules.Delegates;
 using Guybrush.SmartHome.Modules.Interfaces;
+using Guybrush.SmartHome.Station.Core.Base;
 using System;
 
 namespace Guybrush.SmartHome.Modules.Standard
 {
-    public class AirConditioner : ITurnOnOffModule
+    public class AirConditioner : Observable, ITurnOnOffModule
     {
         private bool _status;
 
@@ -26,9 +27,11 @@ namespace Guybrush.SmartHome.Modules.Standard
 
             set
             {
+
                 _status = value;
                 if (ValueChanged != null)
                     ValueChanged(this, value);
+                OnPropertyChanged();
             }
         }
 
