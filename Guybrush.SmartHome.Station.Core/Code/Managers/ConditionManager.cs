@@ -84,13 +84,18 @@ namespace Guybrush.SmartHome.Station.Core.Managers
                         bool isFulfilled = (condition.ConditionType == ConditionType.Equals) ?
                             (currValue == sourceValue) : (currValue != sourceValue);
 
+                        var targetValue = Convert.ToBoolean(condition.TargetValue);
+
                         if (isFulfilled)
                         {
-                            var targetValue = Convert.ToBoolean(condition.TargetValue);
                             if (targetValue != targetDevice.Status)
                                 targetDevice.Status = targetValue;
                         }
-
+                        else
+                        {
+                            if (targetValue == targetDevice.Status)
+                                targetDevice.Status = !targetValue;
+                        }
                     }
                 }
             }
@@ -117,7 +122,6 @@ namespace Guybrush.SmartHome.Station.Core.Managers
                             case ConditionType.Equals:
                                 isFulfilled = (currValue == sourceValue);
                                 break;
-
                             case ConditionType.NotEquals:
                                 isFulfilled = (currValue != sourceValue);
                                 break;
@@ -130,11 +134,17 @@ namespace Guybrush.SmartHome.Station.Core.Managers
 
                         }
 
+                        var targetValue = Convert.ToBoolean(condition.TargetValue);
+
                         if (isFulfilled)
                         {
-                            var targetValue = Convert.ToBoolean(condition.TargetValue);
                             if (targetValue != targetDevice.Status)
                                 targetDevice.Status = targetValue;
+                        }
+                        else
+                        {
+                            if (targetValue == targetDevice.Status)
+                                targetDevice.Status = !targetValue;
                         }
 
                     }

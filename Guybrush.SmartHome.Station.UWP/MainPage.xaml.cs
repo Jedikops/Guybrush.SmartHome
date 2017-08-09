@@ -110,10 +110,10 @@ namespace Guybrush.SmartHome.Station.UWP
                       light.Status = !light.Status;
 
 
-                      if (term.Value > 100)
+                      if (term.Value == 15)
                           term.Value = 0;
                       else
-                          term.Value += 15;
+                          term.Value = 15;
 
                       if (disp.Text == "Chupacabra")
                           disp.Text = "Zlo";
