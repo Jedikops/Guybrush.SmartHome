@@ -25,7 +25,7 @@ namespace Guybrush.SmartHome.Client.Data
             _provider.Start();
         }
 
-        private void ServiceDropped(IProvider sender, ServiceDroppedEventArgs args)
+        private async void ServiceDropped(IProvider sender, ServiceDroppedEventArgs args)
         {
             var name = args.Service.AboutData?.DeviceName;
             var id = args.Service.AboutData?.DeviceId;
@@ -60,40 +60,53 @@ namespace Guybrush.SmartHome.Client.Data
             }
         }
 
-        private void ServiceJoined(IProvider sender, ServiceJoinedEventArgs args)
+        private async void ServiceJoined(IProvider sender, ServiceJoinedEventArgs args)
         {
             var name = args.Service.AboutData?.DeviceName;
             var id = args.Service.AboutData?.DeviceId;
             var appName = args.Service.AboutData?.AppName;
             if (appName == "Guybrush Station")
             {
-                var obj = args.Service.Objects.FirstOrDefault();
-
-                var readInterface = obj.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.devices.reader");
-                var deviceInterface = obj.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.devices.onoffcontrol");
-                if (readInterface != null)
+                var obj = args.Service.Objects.FirstOrDefault(x => x.Path == "/Guybrush");
+                if (obj != null)
                 {
-                    lock (Context.Current.Locks["Readings"])
+                    var readInterface = obj.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.devices.reader");
+                    var deviceInterface = obj.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.devices.onoffcontrol");
+                    var conditionInterface = obj.Interfaces.FirstOrDefault(x => x.Name == "com.guybrush.station.conditions");
+                    if (readInterface != null)
                     {
-                        //if (Context.Current.Readings.All(x => x.Title != name))
+                        lock (Context.Current.Locks["Readings"])
                         {
-                            var reading = new Reading(readInterface, name);
-                            Context.Current.Readings.Add(reading);
+                            //if (Context.Current.Readings.All(x => x.Title != name))
+                            {
+                                var reading = new Reading(readInterface, name);
+                                Context.Current.Readings.Add(reading);
+                            }
+                        }
+                    }
+                    else if (deviceInterface != null)
+                    {
+                        lock (Context.Current.Locks["Devices"])
+                        {
+                            //if (Context.Current.Devices.All(x => x.Title != name))
+                            {
+                                var device = new Device(deviceInterface, name);
+                                Context.Current.Devices.Add(device);
+                            }
+                        }
+                    }
+                    else if (conditionInterface != null)
+                    {
+                        var getCondition = conditionInterface.Methods.FirstOrDefault(x => x.Name == "GetConditions");
+                        if (getCondition != null)
+                        {
+                            var mgr = Context.Current.ConditionManager;
+                            mgr.Configure(conditionInterface, name);
+
+                            mgr.GetConditions();
                         }
                     }
                 }
-                else if (deviceInterface != null)
-                {
-                    lock (Context.Current.Locks["Devices"])
-                    {
-                        //if (Context.Current.Devices.All(x => x.Title != name))
-                        {
-                            var device = new Device(deviceInterface, name);
-                            Context.Current.Devices.Add(device);
-                        }
-                    }
-                }
-
             }
 
             System.Diagnostics.Debug.WriteLine($"Found device '{name}' : ID = {id}");

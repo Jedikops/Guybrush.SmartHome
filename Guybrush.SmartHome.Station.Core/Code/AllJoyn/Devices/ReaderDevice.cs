@@ -11,12 +11,12 @@ namespace Guybrush.SmartHome.Station.Core.Code.AllJoyn.Devices
         //private bool _currentValue;
         internal AdapterInterface Interface { get; set; }
 
-        public ReaderDevice(string name, string unit, string vendorName, string model, string version,
+        public ReaderDevice(string vendorName, string model, string version,
             string serialNumber, string description, IReaderModule module)
-            : base(name, vendorName, model, version, serialNumber, description)
+            : base(module.Name, vendorName, model, version, serialNumber, description)
         {
             Module = module;
-            AdapterBusObject busObject = new AdapterBusObject(name);
+            AdapterBusObject busObject = new AdapterBusObject("Guybrush");
 
             Interface = new AdapterInterface("com.guybrush.devices.reader");
 

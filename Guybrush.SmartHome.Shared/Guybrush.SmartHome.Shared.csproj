@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D4D1300F-00F5-4498-8E97-72150B7CB991}</ProjectGuid>
+    <ProjectGuid>{D450DE0D-30A6-4FD9-9786-94099F5DC371}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Guybrush.SmartHome.Station.Core</RootNamespace>
-    <AssemblyName>Guybrush.SmartHome.Station.Core</AssemblyName>
+    <RootNamespace>Guybrush.SmartHome.Shared</RootNamespace>
+    <AssemblyName>Guybrush.SmartHome.Shared</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -107,29 +107,15 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\AllJoyn\Devices\DisplayDevice.cs" />
-    <Compile Include="Code\AllJoyn\Devices\ReaderDevice.cs" />
-    <Compile Include="Code\Base\Observable.cs" />
-    <Compile Include="Code\Enums\StationStatus.cs" />
-    <Compile Include="Code\Helpers\StationHelper.cs" />
-    <Compile Include="Code\AllJoyn\Devices\TurnOnOffDevice.cs" />
-    <Compile Include="Code\Managers\ConditionManager.cs" />
-    <Compile Include="Code\SmarthomeAdapter.cs" />
-    <Compile Include="Code\Station.cs" />
+    <Compile Include="Builders\ConditionBuilder.cs" />
+    <Compile Include="Enums\ConditionType.cs" />
+    <Compile Include="Enums\DeviceType.cs" />
+    <Compile Include="Mappers\ConditionMapper.cs" />
+    <Compile Include="Models\Condition.cs" />
+    <Compile Include="Models\ConditionContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Guybrush.SmartHome.Station.Core.rd.xml" />
+    <EmbeddedResource Include="Properties\Guybrush.SmartHome.Shared.rd.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Guybrush.SmartHome.Modules\Guybrush.SmartHome.Modules.csproj">
-      <Project>{3F26B05D-F5B3-4F56-9ADB-791B7A360CF8}</Project>
-      <Name>Guybrush.SmartHome.Modules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Guybrush.SmartHome.Shared\Guybrush.SmartHome.Shared.csproj">
-      <Project>{d450de0d-30a6-4fd9-9786-94099f5dc371}</Project>
-      <Name>Guybrush.SmartHome.Shared</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

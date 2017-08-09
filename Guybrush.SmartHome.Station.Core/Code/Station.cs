@@ -1,9 +1,11 @@
 ﻿using AllJoyn.Dsb;
 using Guybrush.SmartHome.Modules.Interfaces;
+using Guybrush.SmartHome.Shared.Models;
 using Guybrush.SmartHome.Station.Core.AllJoyn.Devices;
 using Guybrush.SmartHome.Station.Core.Code.AllJoyn.Devices;
 using Guybrush.SmartHome.Station.Core.Enums;
 using Guybrush.SmartHome.Station.Core.Helpers;
+using Guybrush.SmartHome.Station.Core.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,9 @@ namespace Guybrush.SmartHome.Station
         public IList<IDisplayModule> Displays { get; private set; }
 
         SmarthomeAdapter _homeDevice;
+
+        ConditionManager _conditionManager;
+        List<Condition> _conditions;
         IList<TurnOnOffDevice> _devices;
         IList<ReaderDevice> _readers;
         IList<DisplayDevice> _displays;
@@ -34,17 +39,6 @@ namespace Guybrush.SmartHome.Station
 
         public async Task Initialize()
         {
-            var config = new BridgeConfiguration(StationHelper.GetDeviceID(), "com.guybrush")
-            {
-                ModelName = "Guybrush Bridge",
-                DeviceName = "Station",
-                ApplicationName = "Guybrush Station",
-                Vendor = "Guybrush"
-
-            };
-            _homeDevice = new SmarthomeAdapter(config);
-            await AllJoynDsbServiceManager.Current.StartAsync(_homeDevice);
-
             _devices = new List<TurnOnOffDevice>();
             _readers = new List<ReaderDevice>();
             _displays = new List<DisplayDevice>();
@@ -52,19 +46,35 @@ namespace Guybrush.SmartHome.Station
             Devices = new List<ITurnOnOffModule>();
             Readers = new List<IReaderModule>();
             Displays = new List<IDisplayModule>();
+            _conditions = new List<Condition>();
+            _conditionManager = new ConditionManager(_conditions, Devices);
+
+            var config = new BridgeConfiguration(StationHelper.GetDeviceID(), "com.guybrush")
+            {
+                ModelName = "Guybrush Bridge",
+                DeviceName = "Guybrush Smart Home",
+                ApplicationName = "Guybrush Station",
+                Vendor = "Guybrush"
+
+            };
+            _homeDevice = new SmarthomeAdapter(config, _conditionManager);
+            await AllJoynDsbServiceManager.Current.StartAsync(_homeDevice);
 
             Status = StationStatus.Running;
         }
 
-        public void RegisterTurnOnOffDevice(string name, string vendorName, string model, string version,
+        public void RegisterTurnOnOffDevice(string vendorName, string model, string version,
             string serialNumber, string description, ITurnOnOffModule module)
         {
-            var device = new TurnOnOffDevice(name, vendorName, model, version, serialNumber, description, module);
+            var device = new TurnOnOffDevice(vendorName, model, version, serialNumber, description, module);
 
             AllJoynDsbServiceManager.Current.AddDevice(device);
             _devices.Add(device);
+            module.ValueChanged += _conditionManager.TurnOnOffModule_ValueChanged;
             Devices.Add(module);
         }
+
+
 
         public void UnregisterTurnOnOffDevice(string name, Guid id)
         {
@@ -77,14 +87,16 @@ namespace Guybrush.SmartHome.Station
             }
         }
 
-        public void RegisterReadingDevice(string name, string unit, string vendorName, string model, string version,
+        public void RegisterReadingDevice(string vendorName, string model, string version,
             string serialNumber, string description, IReaderModule module)
         {
-            var device = new ReaderDevice(name, unit, vendorName, model, version, serialNumber, description, module);
+            var device = new ReaderDevice(vendorName, model, version, serialNumber, description, module);
             AllJoynDsbServiceManager.Current.AddDevice(device);
             _readers.Add(device);
+            module.ValueChanged += _conditionManager.ReaderModule_ValueChanged;
             Readers.Add(module);
         }
+
 
 
         public void UnregisterReadingDevice(string name, Guid id)
@@ -102,7 +114,6 @@ namespace Guybrush.SmartHome.Station
             string serialNumber, string description, IDisplayModule module)
         {
             var device = new DisplayDevice(name, vendorName, model, version, serialNumber, description, module);
-
             AllJoynDsbServiceManager.Current.AddDevice(device);
             _displays.Add(device);
             Displays.Add(module);

@@ -110,8 +110,7 @@
     <Compile Include="Base\Observable.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Enums\ConditionType.cs" />
-    <Compile Include="Models\AdapterInterface.cs" />
-    <Compile Include="Models\Condition.cs" />
+    <Compile Include="Managers\ConditionManager.cs" />
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\Reading.cs" />
     <Compile Include="Models\User.cs" />
@@ -119,7 +118,12 @@
     <Compile Include="StationProxy.cs" />
     <EmbeddedResource Include="Properties\Guybrush.SmartHome.Client.Data.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Guybrush.SmartHome.Shared\Guybrush.SmartHome.Shared.csproj">
+      <Project>{d450de0d-30a6-4fd9-9786-94099f5dc371}</Project>
+      <Name>Guybrush.SmartHome.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

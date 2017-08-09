@@ -16,13 +16,13 @@ namespace Guybrush.SmartHome.Station.UWP
     {
         StationViewModel ViewModel;
 
-        Light light = new Light();
-        Blinds blinds = new Blinds();
-        AirConditioner air = new AirConditioner();
+        Light light = new Light() { Name = "Light" };
+        Blinds blinds = new Blinds() { Name = "Blinds" };
+        AirConditioner air = new AirConditioner() { Name = "Air Conditioner" };
 
-        Termomethre term = new Termomethre();
-        HumiditySensor humi = new HumiditySensor();
-        LightSensor ligsens = new LightSensor();
+        Termomethre term = new Termomethre() { Name = "Termomethre" };
+        HumiditySensor humi = new HumiditySensor() { Name = "Humidity Sensor" };
+        LightSensor ligsens = new LightSensor() { Name = "Light Sensor" };
         Display disp = new Display();
 
         public MainPage()
@@ -57,15 +57,13 @@ namespace Guybrush.SmartHome.Station.UWP
                 Station = new Station();
                 await Station.Initialize();
 
-                Station.RegisterTurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", light.Id.ToString(), "Guybrush Light", light);
-                Station.RegisterTurnOnOffDevice("Air Conditioner", "Guybrush Inc", "Air Conditioner", "1", air.Id.ToString(), "Guybrush air conditioner", air);
-                Station.RegisterTurnOnOffDevice("Blinds", "Guybrush Inc", "Blinds", "1", blinds.Id.ToString(), "Guybrush blinds", blinds);
+                Station.RegisterTurnOnOffDevice("Guybrush Inc", "Light", "1", light.Id.ToString(), "Guybrush Light", light);
+                Station.RegisterTurnOnOffDevice("Guybrush Inc", "Air Conditioner", "1", air.Id.ToString(), "Guybrush air conditioner", air);
+                Station.RegisterTurnOnOffDevice("Guybrush Inc", "Blinds", "1", blinds.Id.ToString(), "Guybrush blinds", blinds);
 
-
-
-                Station.RegisterReadingDevice("Light Intensity", "Lux", "Guybrush Inc", "Light Intensity", "1", ligsens.Id.ToString(), "Guybrush light intensity sensor", ligsens);
-                Station.RegisterReadingDevice("Temperature", "C", "Guybrush Inc", "Temperature", "1", term.Id.ToString(), "Guybrush termomether", term);
-                Station.RegisterReadingDevice("Humidity", "%", "Guybrush Inc", "Humidity", "1", humi.Id.ToString(), "Guybrush humidity sensor", humi);
+                Station.RegisterReadingDevice("Guybrush Inc", "Light Intensity", "1", ligsens.Id.ToString(), "Guybrush light intensity sensor", ligsens);
+                Station.RegisterReadingDevice("Guybrush Inc", "Temperature", "1", term.Id.ToString(), "Guybrush termomether", term);
+                Station.RegisterReadingDevice("Guybrush Inc", "Humidity", "1", humi.Id.ToString(), "Guybrush humidity sensor", humi);
 
                 Station.RegisterDisplayDevice("Display", "Guybrush Inc", "Display", "1", disp.Id.ToString(), "Guybrush display device", disp);
 
@@ -75,9 +73,9 @@ namespace Guybrush.SmartHome.Station.UWP
             var delay = Task.Run(async () =>
             {
                 bool blind2Added = false;
-                var blinds = new Blinds();
+                var blinds = new Blinds() { Name = "Blinds 2" };
                 bool reading2Added = false;
-                var lightSens = new LightSensor();
+                var lightSens = new LightSensor() { Name = "Light Intensity 2" };
 
 
                 while (true)
@@ -91,7 +89,7 @@ namespace Guybrush.SmartHome.Station.UWP
                     }
                     else
                     {
-                        Station.RegisterTurnOnOffDevice("Blinds 2", "Guybrush Inc", "Blinds 2", "1", blinds.Id.ToString(), "Guybrush blinds 2", blinds);
+                        Station.RegisterTurnOnOffDevice("Guybrush Inc", "Blinds 2", "1", blinds.Id.ToString(), "Guybrush blinds 2", blinds);
                         blind2Added = true;
                     }
 
@@ -102,7 +100,7 @@ namespace Guybrush.SmartHome.Station.UWP
                     }
                     else
                     {
-                        Station.RegisterReadingDevice("Light Intensity 2", "Lux", "Guybrush Inc", "Light Intensity", "1", lightSens.Id.ToString(), "Guybrush light intensity sensor", lightSens);
+                        Station.RegisterReadingDevice("Guybrush Inc", "Light Intensity", "1", lightSens.Id.ToString(), "Guybrush light intensity sensor", lightSens);
                         reading2Added = true;
                     }
 
@@ -110,10 +108,12 @@ namespace Guybrush.SmartHome.Station.UWP
                   () =>
                   {
                       light.Status = !light.Status;
-                      if (ligsens.Value > 100)
-                          ligsens.Value = 0;
+
+
+                      if (term.Value > 100)
+                          term.Value = 0;
                       else
-                          ligsens.Value += 15;
+                          term.Value += 15;
 
                       if (disp.Text == "Chupacabra")
                           disp.Text = "Zlo";

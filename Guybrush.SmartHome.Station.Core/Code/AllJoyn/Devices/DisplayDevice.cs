@@ -16,7 +16,7 @@ namespace Guybrush.SmartHome.Station.Core.Code.AllJoyn.Devices
             : base(name, vendorName, model, version, serialNumber, description)
         {
             Module = module;
-            AdapterBusObject busObject = new AdapterBusObject(name);
+            AdapterBusObject busObject = new AdapterBusObject("Guybrush");
 
             Interface = new AdapterInterface("com.guybrush.display");
 
