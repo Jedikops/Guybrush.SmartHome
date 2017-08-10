@@ -99,12 +99,18 @@
       <DependentUpon>ConditionDetailControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Handlers\CollectionHandler.cs" />
+    <Compile Include="Resources\ConditionDataTemplateDictionary.xaml.cs">
+      <DependentUpon>ConditionDataTemplateDictionary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ReadingTemplateDictionary.xaml.cs">
       <DependentUpon>ReadingTemplateDictionary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ConditionsViewModel.cs" />
+    <Compile Include="ViewModels\ConditionUserControlViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModel.cs" />
     <Compile Include="ViewModels\DeviceViewModel.cs" />
-    <Compile Include="Pages\Conditions.xaml.cs">
-      <DependentUpon>Conditions.xaml</DependentUpon>
+    <Compile Include="Pages\ConditionsPage.xaml.cs">
+      <DependentUpon>ConditionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\DevicesPage.xaml.cs">
       <DependentUpon>DevicesPage.xaml</DependentUpon>
@@ -151,7 +157,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Conditions.xaml">
+    <Page Include="Pages\ConditionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -164,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Readings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ConditionDataTemplateDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -192,6 +202,14 @@
     <ProjectReference Include="..\Guybrush.SmartHome.Client.Data\Guybrush.SmartHome.Client.Data.csproj">
       <Project>{89d149af-0271-4cdb-bb95-a64b8683f5a5}</Project>
       <Name>Guybrush.SmartHome.Client.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Guybrush.SmartHome.Shared\Guybrush.SmartHome.Shared.csproj">
+      <Project>{D450DE0D-30A6-4FD9-9786-94099F5DC371}</Project>
+      <Name>Guybrush.SmartHome.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Guybrush.SmartHome.Station.Core\Guybrush.SmartHome.Station.Core.csproj">
+      <Project>{D4D1300F-00F5-4498-8E97-72150B7CB991}</Project>
+      <Name>Guybrush.SmartHome.Station.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

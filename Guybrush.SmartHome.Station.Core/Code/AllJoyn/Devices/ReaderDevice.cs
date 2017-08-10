@@ -3,7 +3,7 @@ using BridgeRT;
 using Guybrush.SmartHome.Modules.Interfaces;
 using System.Linq;
 
-namespace Guybrush.SmartHome.Station.Core.Code.AllJoyn.Devices
+namespace Guybrush.SmartHome.Station.Core.AllJoyn.Devices
 {
     public class ReaderDevice : AdapterDevice
     {

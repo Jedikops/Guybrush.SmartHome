@@ -11,8 +11,7 @@ namespace Guybrush.SmartHome.Client.Data
 
         private ObservableCollection<Device> _devices;
         private ObservableCollection<Reading> _readings;
-        //private ObservableCollection<Condition> _conditions;
-        private ConditionManager _condMgr;
+        private ClientConditionManager _condMgr;
         private ObservableCollection<User> _users;
         public Dictionary<string, object> Locks { get; private set; }
 
@@ -28,7 +27,7 @@ namespace Guybrush.SmartHome.Client.Data
             private set { _readings = value; }
         }
 
-        public ConditionManager ConditionManager
+        public ClientConditionManager ConditionManager
         {
             get { return _condMgr; }
         }
@@ -43,7 +42,7 @@ namespace Guybrush.SmartHome.Client.Data
         {
             _devices = new ObservableCollection<Device>();
             _readings = new ObservableCollection<Reading>();
-            _condMgr = new ConditionManager();
+            _condMgr = new ClientConditionManager();
             _users = new ObservableCollection<User>();
             Locks = new Dictionary<string, object>();
 

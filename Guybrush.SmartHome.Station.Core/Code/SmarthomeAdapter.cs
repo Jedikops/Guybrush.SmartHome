@@ -21,8 +21,8 @@ namespace Guybrush.SmartHome.Station
 
             var addConInputParams = new List<AdapterValue>();
             addConInputParams.Add(new AdapterValue("SourceDeviceType", -1));
-            addConInputParams.Add(new AdapterValue("SourceDeviceName", ""));
-            addConInputParams.Add(new AdapterValue("TargetDeviceName", ""));
+            addConInputParams.Add(new AdapterValue("SourceDevice", ""));
+            addConInputParams.Add(new AdapterValue("TargetDevice", ""));
             addConInputParams.Add(new AdapterValue("RequiredValue", -1));
             addConInputParams.Add(new AdapterValue("ConditionType", -1));
             addConInputParams.Add(new AdapterValue("TargetValue", -1));
@@ -36,7 +36,6 @@ namespace Guybrush.SmartHome.Station
 
 
             var getCondOutParams = new List<AdapterValue>();
-            getCondOutParams.Add(new AdapterValue("MyArray", new int[0]));
             getCondOutParams.Add(new AdapterValue("SourceDeviceType", ""));
             getCondOutParams.Add(new AdapterValue("SourceDevice", ""));
             getCondOutParams.Add(new AdapterValue("TargetDevice", ""));
@@ -69,16 +68,20 @@ namespace Guybrush.SmartHome.Station
 
         private void GetConditions(AdapterMethod sender, IReadOnlyDictionary<string, object> inputParams, IDictionary<string, object> outputParams)
         {
-            var conditions = _conditionManager.Conditions;
+            lock (_conditionManager.Locker)
+            {
+                var conditions = _conditionManager.Conditions;
 
-            var condArrays = new ConditionMapper().MapToParams(conditions);
-            outputParams["SourceDeviceType"] = condArrays.SourceDeviceTypes;
-            outputParams["SourceDevice"] = condArrays.SourceDeviceNames;
-            outputParams["TargetDevice"] = condArrays.TargetDeviceNames;
-            outputParams["RequiredValue"] = condArrays.RequiredValues;
-            outputParams["ConditionType"] = condArrays.ConditionTypes;
-            outputParams["TargetValue"] = condArrays.TargetValues;
 
+                var condArrays = new ConditionMapper().MapToParams(conditions);
+
+                outputParams["SourceDeviceType"] = condArrays.SourceDeviceTypes ?? string.Empty;
+                outputParams["SourceDevice"] = condArrays.SourceDeviceNames ?? string.Empty;
+                outputParams["TargetDevice"] = condArrays.TargetDeviceNames ?? string.Empty;
+                outputParams["RequiredValue"] = condArrays.RequiredValues ?? string.Empty;
+                outputParams["ConditionType"] = condArrays.ConditionTypes ?? string.Empty;
+                outputParams["TargetValue"] = condArrays.TargetValues ?? string.Empty;
+            }
         }
 
         public void AddCondition(AdapterMethod sender, IReadOnlyDictionary<string, object> inputParams, IDictionary<string, object> outputParams)

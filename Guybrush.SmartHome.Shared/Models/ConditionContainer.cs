@@ -4,7 +4,6 @@
 
     public class ConditionContainer
     {
-        public int[] MyArray { get; set; }
         public string SourceDeviceTypes { get; set; }
         public string SourceDeviceNames { get; set; }
         public string TargetDeviceNames { get; set; }

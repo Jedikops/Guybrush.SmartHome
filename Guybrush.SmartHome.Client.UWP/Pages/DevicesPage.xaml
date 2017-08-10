@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Guybrush.SmartHome.Client.UWP.Pages"
     xmlns:controls="using:Guybrush.SmartHome.Client.UWP.Controls"
-        xmlns:res="using:Guybrush.SmartHome.Client.UWP.Resources"
+    xmlns:res="using:Guybrush.SmartHome.Client.UWP.Resources"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     
@@ -27,15 +27,14 @@
         </Grid.RowDefinitions>
 
         <Border Margin="10" Grid.Row="0">
-            <TextBlock x:Name="title" Text="Devices"  VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+            <TextBlock x:Name="title" Text="Devices"  VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Border>
         <ListView x:Name="DevicesListView" ItemsSource="{x:Bind Path=ViewModel.Devices}"  IsItemClickEnabled="true" ItemClick="DevicesListView_ItemClick"
                       SelectedItem="{x:Bind ViewModel.SelectedDevice, Mode=TwoWay}"  
-                      ItemTemplate="{StaticResource deviceDataTemplate}" ItemContainerStyle="{StaticResource DevicesListView}" Grid.Row="1" SelectionMode="Single" />
+                      ItemTemplate="{StaticResource deviceDataTemplate}" ItemContainerStyle="{StaticResource DevicesListViewStyle}" Grid.Row="1" SelectionMode="Single" />
 
         <Button Visibility="{x:Bind ViewModel.IsDeviceSelected, Mode=OneWay}"  HorizontalAlignment="Stretch"
-                    Content="{x:Bind ViewModel.DeviceButtonText, Mode=OneWay}" Grid.Row="2" ClickMode="Release" Click="{x:Bind Button_Click}"
-                    ></Button>
+                    Content="{x:Bind ViewModel.DeviceButtonText, Mode=OneWay}" Grid.Row="2" ClickMode="Release" Click="{x:Bind Button_Click}" ></Button>
 
     </Grid>
 </Page>

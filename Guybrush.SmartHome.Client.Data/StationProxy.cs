@@ -14,7 +14,6 @@ namespace Guybrush.SmartHome.Client.Data
         private StationProxy()
         {
             _provider = new AllJoynProvider();
-
             _provider.ServiceJoined += ServiceJoined;
             _provider.ServiceDropped += ServiceDropped;
 
@@ -100,10 +99,9 @@ namespace Guybrush.SmartHome.Client.Data
                         var getCondition = conditionInterface.Methods.FirstOrDefault(x => x.Name == "GetConditions");
                         if (getCondition != null)
                         {
-                            var mgr = Context.Current.ConditionManager;
-                            mgr.Configure(conditionInterface, name);
+                            Context.Current.ConditionManager.Configure(conditionInterface, name);
 
-                            mgr.GetConditions();
+
                         }
                     }
                 }

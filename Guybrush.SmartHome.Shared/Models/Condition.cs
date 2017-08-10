@@ -4,7 +4,6 @@ namespace Guybrush.SmartHome.Shared.Models
 {
     public class Condition
     {
-        public int item { get; set; }
         public DeviceType SourceDeviceType { get; set; }
 
         public string SourceDeviceName { get; set; }

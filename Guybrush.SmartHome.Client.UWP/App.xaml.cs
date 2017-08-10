@@ -57,6 +57,9 @@ namespace Guybrush.SmartHome.Client.UWP
                 Window.Current.Content = rootFrame;
             }
 
+            Context.Initialize();
+            StationProxy.Current.Activate();
+
             if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
@@ -69,8 +72,7 @@ namespace Guybrush.SmartHome.Client.UWP
                 // Ensure the current window is active
                 Window.Current.Activate();
 
-                Context.Initialize(); 
-                StationProxy.Current.Activate();
+
 
             }
         }

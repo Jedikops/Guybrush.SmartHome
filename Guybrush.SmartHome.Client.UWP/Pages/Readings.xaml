@@ -25,11 +25,11 @@
         </Grid.RowDefinitions>
 
         <Border Margin="10" Grid.Row="0">
-            <TextBlock x:Name="title" Text="Readings"  VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+            <TextBlock x:Name="title" Text="Readings"  VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Border>
-        <ListView x:Name="DevicesListView" ItemsSource="{x:Bind Path=ViewModel.Readings}" 
+        <ListView x:Name="ReadingsListView" ItemsSource="{x:Bind Path=ViewModel.Readings}" 
                       ItemTemplate="{StaticResource readingDataTemplate}"  SelectionMode="Single"
-                  ItemContainerStyle="{StaticResource ReadingsListView}" 
+                  ItemContainerStyle="{StaticResource ReadingsListViewStyle}" 
                   Grid.Row="1"/>
     </Grid>
 </Page>

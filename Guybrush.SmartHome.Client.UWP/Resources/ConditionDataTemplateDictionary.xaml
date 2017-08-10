@@ -1,0 +1,26 @@
+﻿<ResourceDictionary
+    x:Class="Guybrush.SmartHome.Client.UWP.Resources.ConditionDataTemplateDictionary"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Guybrush.SmartHome.Client.UWP.Resources"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:Guybrush.SmartHome.Client.UWP.ViewModels"
+    mc:Ignorable="d">
+
+    <DataTemplate x:Key="conditionDataTemplate" x:DataType="model:ConditionViewModel" >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{x:Bind SourceDeviceName}" FontWeight="Bold" Grid.Column="0"/>
+                <TextBlock Text=" - "></TextBlock>
+                <TextBlock Text="{x:Bind TargetDeviceName}" FontWeight="Bold" Grid.Column="0"/>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

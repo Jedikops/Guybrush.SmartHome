@@ -10,6 +10,35 @@
     d:DesignWidth="400">
 
     <Grid>
+        <StackPanel Orientation="Vertical" >
+
+            <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Center">
+                <TextBlock Text="When: "></TextBlock>
+                <ComboBox x:Name="SourceDevice_ComboBox"  ItemsSource="{x:Bind ViewModel.DevicesAndReadings, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.SourceDeviceIndex, Mode=TwoWay}"  SelectionChanged="SourceDevice_ComboBox_SelectionChanged" IsEnabled="{x:Bind ViewModel.IsSourceEnabled, Mode=OneWay}"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Center">
+                <TextBlock Text="Is: "></TextBlock>
+                <ComboBox x:Name="OperatorReading" ItemsSource="{x:Bind ViewModel.OperatorReadingValues,Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.OperatorReadingIndex,Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.IsSourceEnabled, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsSourceAReading, Mode=OneWay}" ></ComboBox>
+                <ComboBox x:Name="OperatorDevice"  ItemsSource="{x:Bind ViewModel.OperatorDeviceValues,Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.OperatorDeviceIndex,Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.IsSourceEnabled, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsSourceADevice, Mode=OneWay}"></ComboBox>
+                <TextBox x:Name="RequiredValueReading"  Text="{x:Bind ViewModel.RequiredValueReading, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.IsSourceEnabled, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsSourceAReading, Mode=OneWay}" ></TextBox>
+                <ComboBox x:Name="RequiredValueDevice"  ItemsSource="{x:Bind ViewModel.RequiredValueDeviceValues,Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.RequiredValueDeviceIndex, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.IsSourceEnabled, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsSourceADevice, Mode=OneWay}"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Center">
+                <TextBlock Text="Then: "></TextBlock>
+                <ComboBox x:Name="TargetDevice_ComboBox"  ItemsSource="{x:Bind ViewModel.Devices, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.TargetDeviceIndex, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.IsSourceEnabled, Mode=OneWay}"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Center">
+                <TextBlock Text="Changes to: "></TextBlock>
+                <ComboBox x:Name="TargetValueDevice" ItemsSource="{x:Bind ViewModel.TargetValueDeviceValues,Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.TargetDeviceValueIndex,Mode=TwoWay}"  IsEnabled="{x:Bind ViewModel.IsSourceEnabled, Mode=OneWay}"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Save" Click="ButtonSave_Click" Visibility="{x:Bind ViewModel.IsConditionNotSet, Mode=OneWay}"></Button>
+                <Button Content="Delete" Click="ButtonDelete_Click" Visibility="{x:Bind ViewModel.IsConditionSet, Mode=OneWay}"></Button>
+
+                <Button Content="Cancel" Click="ButtonCancel_Click" ></Button>
+            </StackPanel>
+            
+        </StackPanel>
 
     </Grid>
 </UserControl>

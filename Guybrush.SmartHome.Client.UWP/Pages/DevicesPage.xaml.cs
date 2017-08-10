@@ -21,10 +21,8 @@ namespace Guybrush.SmartHome.Client.UWP.Pages
 
         private void Devices_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //DataContext = new DevicesViewModel();
             ViewModel = new DevicesViewModel();
             Bindings.Update();
-            //DevicesListView.SingleSelectionFollowsFocus = false;
         }
 
         public DevicesViewModel ViewModel { get; private set; }

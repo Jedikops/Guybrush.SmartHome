@@ -2,7 +2,6 @@
 using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Shared.Models;
 using Guybrush.SmartHome.Station.Core.AllJoyn.Devices;
-using Guybrush.SmartHome.Station.Core.Code.AllJoyn.Devices;
 using Guybrush.SmartHome.Station.Core.Enums;
 using Guybrush.SmartHome.Station.Core.Helpers;
 using Guybrush.SmartHome.Station.Core.Managers;

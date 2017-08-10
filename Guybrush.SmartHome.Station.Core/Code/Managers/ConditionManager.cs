@@ -9,6 +9,7 @@ namespace Guybrush.SmartHome.Station.Core.Managers
 {
     public class ConditionManager
     {
+        public object Locker = new object();
         IList<Condition> _conditions;
         IList<ITurnOnOffModule> _devices;
         //IList<IReaderModule> _readers;
@@ -23,53 +24,72 @@ namespace Guybrush.SmartHome.Station.Core.Managers
         public ConditionManager(IList<Condition> conditions, IList<ITurnOnOffModule> devices)
         {
             _devices = devices;
-
-            _conditions = conditions;
-
-            _conditions.Add(new Condition()
+            lock (Locker)
             {
-                SourceDeviceType = DeviceType.TurnOnOffDevice,
-                SourceDeviceName = "Light",
-                TargetDeviceName = "Blinds",
-                RequiredValue = 1,
-                ConditionType = ConditionType.Equals,
-                TargetValue = 1
-            });
+                _conditions = conditions;
 
-            _conditions.Add(new Condition()
-            {
-                SourceDeviceType = DeviceType.ReaderDevice,
-                SourceDeviceName = "Termomethre",
-                TargetDeviceName = "Air Conditioner",
-                RequiredValue = 14,
-                ConditionType = ConditionType.More,
-                TargetValue = 1
-            });
+                _conditions.Add(new Condition()
+                {
+                    SourceDeviceType = DeviceType.TurnOnOffDevice,
+                    SourceDeviceName = "Light",
+                    TargetDeviceName = "Blinds",
+                    RequiredValue = 1,
+                    ConditionType = ConditionType.Equals,
+                    TargetValue = 1
+                });
 
+                _conditions.Add(new Condition()
+                {
+                    SourceDeviceType = DeviceType.ReaderDevice,
+                    SourceDeviceName = "Termomethre",
+                    TargetDeviceName = "Air Conditioner",
+                    RequiredValue = 14,
+                    ConditionType = ConditionType.More,
+                    TargetValue = 1
+                });
+            }
         }
 
         public void RegisterCondition(Condition cond)
         {
             var searchedCondition = _conditions.FirstOrDefault(x => x.SourceDeviceName == cond.SourceDeviceName && x.TargetDeviceName == cond.TargetDeviceName);
             if (searchedCondition == null)
-                _conditions.Add(searchedCondition);
+            {
+                lock (Locker)
+                {
+                    _conditions.Add(cond);
+                }
+            }
             else
-                _conditions[_conditions.IndexOf(searchedCondition)] = cond;
+            {
+                lock (Locker)
+                {
+                    _conditions[_conditions.IndexOf(searchedCondition)] = cond;
+                }
+            }
         }
 
         public void RemoveCondition(string sourceDeviceName, string targetDeviceName)
         {
             var condition = _conditions.FirstOrDefault(x => x.SourceDeviceName == sourceDeviceName && x.TargetDeviceName == targetDeviceName);
             if (condition != null)
-                _conditions.Remove(condition);
-
+            {
+                lock (Locker)
+                {
+                    _conditions.Remove(condition);
+                }
+            }
         }
 
         public void TurnOnOffModule_ValueChanged(object sender, bool value)
         {
             var sourceDevice = (ITurnOnOffModule)sender;
             var sourceName = sourceDevice.Name;
-            var condition = _conditions.FirstOrDefault(x => x.SourceDeviceName == sourceName);
+            Condition condition = null;
+            lock (Locker)
+            {
+                condition = _conditions.FirstOrDefault(x => x.SourceDeviceName == sourceName);
+            }
             if (condition != null)
             {
                 if (condition.SourceDeviceType == DeviceType.TurnOnOffDevice)

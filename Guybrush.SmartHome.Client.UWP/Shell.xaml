@@ -20,7 +20,7 @@
 
                 <Button x:Name="HamburgerButton" Grid.Row="0" Style="{StaticResource MenuItemButtonStyle}" Tag="&#xE700;"  Content="Guybrush Smart Home" Click="HamburgerButton_Click" Margin="3,0,2,0" Width="315" />
 
-                <StackPanel x:Name="NavigationMenu" Orientation="Vertical" Grid.Row="1">
+                <StackPanel x:Name="NavigationMenu" Orientation="Vertical" Grid.Row="1" >
                     <RadioButton x:Name="DevicesOption" GroupName="NavPaneGroup"
                                  Style="{StaticResource NavigationButtonStyle}"
                                  Tag="&#xE707;"

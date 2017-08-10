@@ -38,16 +38,20 @@ namespace Guybrush.SmartHome.Client.Data.Models
         {
             Task.Run(async () =>
             {
-                _title = name;
-
-                _iface = iface;
-                _prop = iface.Properties.FirstOrDefault(x => x.Name == "Status");
-                if (_prop != null)
+                try
                 {
-                    _prop.ValueChanged += _prop_ValueChanged;
-                    _method = iface.Methods.First(x => x.Name == "Switch");
-                    await LoadValue();
+                    _title = name;
+
+                    _iface = iface;
+                    _prop = iface.Properties.FirstOrDefault(x => x.Name == "Status");
+                    if (_prop != null)
+                    {
+                        _prop.ValueChanged += _prop_ValueChanged;
+                        _method = iface.Methods.First(x => x.Name == "Switch");
+                        await LoadValue();
+                    }
                 }
+                catch { }
             }).Wait();
         }
 

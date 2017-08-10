@@ -124,7 +124,7 @@ namespace Guybrush.SmartHome.Client.UWP
 
         private void ConditionsOption_Checked(object sender, RoutedEventArgs e)
         {
-            Content.Navigate(typeof(Conditions));
+            Content.Navigate(typeof(ConditionsPage));
         }
 
         //private void UsersOption_Checked(object sender, RoutedEventArgs e)
