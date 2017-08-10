@@ -1,8 +1,10 @@
 ﻿using Guybrush.SmartHome.Client.Data;
 using Guybrush.SmartHome.Client.Data.Base;
 using Guybrush.SmartHome.Client.Data.Models;
+using Guybrush.SmartHome.Client.UWP.Controls;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
 namespace Guybrush.SmartHome.Client.UWP.ViewModels
@@ -54,6 +56,9 @@ namespace Guybrush.SmartHome.Client.UWP.ViewModels
             get { return _isSourceAReading; }
             set { _isSourceAReading = value; OnPropertyChanged(); }
         }
+
+
+
 
         private bool _isSourceADevice;
         public bool IsSourceADevice
@@ -118,6 +123,7 @@ namespace Guybrush.SmartHome.Client.UWP.ViewModels
         }
 
         public ObservableCollection<ConditionViewModel> Conditions { get; internal set; }
+        public ConditionDetailControl Control { get; internal set; }
 
         public ConditionUserControlViewModel()
         {
@@ -183,23 +189,30 @@ namespace Guybrush.SmartHome.Client.UWP.ViewModels
             }
 
         }
-        internal void SourceSelectionChanged()
+        internal async Task SourceSelectionChanged()
         {
-            if (SourceDeviceIndex != -1)
+            if (Context.Current.ConditionManager.IsConnected)
             {
-                var deviceName = DevicesAndReadings[SourceDeviceIndex];
-                var device = Context.Current.Devices.FirstOrDefault(x => x.Title == deviceName);
-                if (device != null)
+                if (SourceDeviceIndex != -1)
                 {
+                    var deviceName = DevicesAndReadings[SourceDeviceIndex];
+                    var device = Context.Current.Devices.FirstOrDefault(x => x.Title == deviceName);
+                    if (device != null)
+                    {
 
-                    IsSourceAReading = false;
-                    IsSourceADevice = true;
+                        IsSourceAReading = false;
+                        IsSourceADevice = true;
+                    }
+                    else
+                    {
+                        IsSourceAReading = true;
+                        IsSourceADevice = false;
+                    }
                 }
-                else
-                {
-                    IsSourceAReading = true;
-                    IsSourceADevice = false;
-                }
+            }
+            else
+            {
+                Control.Reload();
             }
         }
     }

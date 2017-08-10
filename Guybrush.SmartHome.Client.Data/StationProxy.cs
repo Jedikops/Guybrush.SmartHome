@@ -54,6 +54,13 @@ namespace Guybrush.SmartHome.Client.Data
                                 Context.Current.Readings.Remove(reader);
                         }
                     }
+                    else if (name == "Guybrush Smart Home")
+                    {
+                        lock (Context.Current.Locks["Conditions"])
+                        {
+                            Context.Current.ConditionManager.Disconnect();
+                        }
+                    }
                 }
                 System.Diagnostics.Debug.WriteLine($"Lost device '{name}' : ID = {id}");
             }

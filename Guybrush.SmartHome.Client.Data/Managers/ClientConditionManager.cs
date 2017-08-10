@@ -16,6 +16,14 @@ namespace Guybrush.SmartHome.Client.Data.Managers
         private IMethod _addCondition;
         private string name;
 
+        private bool _isConnected;
+
+        public bool IsConnected
+        {
+            get { return _isConnected; }
+            set { _isConnected = value; }
+        }
+
         public IList<Condition> Conditions { get; private set; }
         public ClientConditionManager()
         {
@@ -30,8 +38,22 @@ namespace Guybrush.SmartHome.Client.Data.Managers
                 _getConditions = _conditionInterface.Methods.First(x => x.Name == "GetConditions");
                 _removeCondition = _conditionInterface.Methods.First(x => x.Name == "RemoveCondition");
                 _addCondition = _conditionInterface.Methods.First(x => x.Name == "AddCondition");
+                IsConnected = true;
+            }
+            else
+            {
+                IsConnected = false;
             }
             this.name = name;
+        }
+
+        public void Disconnect()
+        {
+            _conditionInterface = null;
+            _getConditions = null;
+            _removeCondition = null;
+            _addCondition = null;
+            IsConnected = false;
         }
 
         public async Task<IList<Condition>> GetConditions()
@@ -40,7 +62,7 @@ namespace Guybrush.SmartHome.Client.Data.Managers
             {
                 Conditions.Clear();
             }
-            if (_getConditions != null)
+            if (IsConnected)
             {
                 InvokeMethodResult result = await _getConditions.InvokeAsync(new List<object>());
                 var values = result.Values;
@@ -79,13 +101,15 @@ namespace Guybrush.SmartHome.Client.Data.Managers
 
         public async Task DeleteCondition(string sourceName, string targetName)
         {
-            await _removeCondition.InvokeAsync(new List<object>() { sourceName, targetName });
+            if (IsConnected)
+                await _removeCondition.InvokeAsync(new List<object>() { sourceName, targetName });
 
         }
 
         public async Task AddCondition(int deviceType, string sourceName, string targetName, int requiredValue, int conditionType, int targetValue)
         {
-            await _addCondition.InvokeAsync(new List<object>() { deviceType, sourceName, targetName, requiredValue, conditionType, targetValue });
+            if (IsConnected)
+                await _addCondition.InvokeAsync(new List<object>() { deviceType, sourceName, targetName, requiredValue, conditionType, targetValue });
         }
     }
 }

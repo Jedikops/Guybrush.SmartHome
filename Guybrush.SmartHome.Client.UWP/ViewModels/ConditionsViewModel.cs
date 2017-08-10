@@ -14,25 +14,39 @@ namespace Guybrush.SmartHome.Client.UWP.ViewModels
         {
             Conditions = new ObservableCollection<ConditionViewModel>();
         }
+        private bool _isNewEnabled;
 
+        public bool IsNewEnabled
+        {
+            get { return _isNewEnabled; }
+            set { _isNewEnabled = value; OnPropertyChanged(); }
+        }
         public async Task LoadConditions()
         {
             Conditions.Clear();
             _conditionManager = Context.Current.ConditionManager;
             if (_conditionManager != null)
             {
-                var conds = await _conditionManager.GetConditions();
-                foreach (var cond in conds)
+                if (_conditionManager.IsConnected)
                 {
-                    Conditions.Add(new ConditionViewModel()
+                    var conds = await _conditionManager.GetConditions();
+                    foreach (var cond in conds)
                     {
-                        SourceDeviceType = cond.SourceDeviceType,
-                        SourceDeviceName = cond.SourceDeviceName,
-                        TargetDeviceName = cond.TargetDeviceName,
-                        RequiredValue = cond.RequiredValue,
-                        ConditionType = cond.ConditionType,
-                        TargetValue = cond.TargetValue
-                    });
+                        Conditions.Add(new ConditionViewModel()
+                        {
+                            SourceDeviceType = cond.SourceDeviceType,
+                            SourceDeviceName = cond.SourceDeviceName,
+                            TargetDeviceName = cond.TargetDeviceName,
+                            RequiredValue = cond.RequiredValue,
+                            ConditionType = cond.ConditionType,
+                            TargetValue = cond.TargetValue
+                        });
+                    }
+                }
+                else
+                {
+
+                    Conditions.Clear();
                 }
             }
         }
