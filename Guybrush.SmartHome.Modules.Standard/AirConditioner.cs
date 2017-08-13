@@ -2,11 +2,27 @@
 using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Station.Core.Base;
 using System;
+using Windows.Devices.Gpio;
 
 namespace Guybrush.SmartHome.Modules.Standard
 {
     public class AirConditioner : Observable, ITurnOnOffModule
     {
+
+        GpioController GPIO;
+        GpioPin pin;
+
+        public AirConditioner()
+        {
+            try
+            {
+                GPIO = GpioController.GetDefault();
+                pin = GPIO.OpenPin(5);
+                pin.SetDriveMode(GpioPinDriveMode.Output);
+            }
+            catch { }
+        }
+
         private bool _status;
 
         private Guid _id = Guid.NewGuid();
@@ -34,11 +50,27 @@ namespace Guybrush.SmartHome.Modules.Standard
 
             set
             {
+                if (pin == null)
+                {
+                    try
+                    {
+                        GPIO = GpioController.GetDefault();
+                        pin = GPIO.OpenPin(5);
+                        pin.SetDriveMode(GpioPinDriveMode.Output);
+                    }
+                    catch { }
+                }
+
+                if (value == true)
+                    pin.Write(GpioPinValue.Low);
+                else
+                    pin.Write(GpioPinValue.High);
 
                 _status = value;
                 if (ValueChanged != null)
                     ValueChanged(this, value);
                 OnPropertyChanged();
+
             }
         }
 

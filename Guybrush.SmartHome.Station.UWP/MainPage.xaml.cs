@@ -72,8 +72,8 @@ namespace Guybrush.SmartHome.Station.UWP
 
             var delay = Task.Run(async () =>
             {
-                bool blind2Added = false;
-                var blinds = new Blinds() { Name = "Blinds 2" };
+                //bool blind2Added = false;
+                //var blinds = new Blinds() { Name = "Blinds 2" };
                 bool reading2Added = false;
                 var lightSens = new LightSensor() { Name = "Light Intensity 2" };
 
@@ -82,16 +82,16 @@ namespace Guybrush.SmartHome.Station.UWP
                 {
                     await Task.Delay(15000);
 
-                    if (blind2Added)
-                    {
-                        Station.UnregisterTurnOnOffDevice("Blinds 2", blinds.Id);
-                        blind2Added = false;
-                    }
-                    else
-                    {
-                        Station.RegisterTurnOnOffDevice("Guybrush Inc", "Blinds 2", "1", blinds.Id.ToString(), "Guybrush blinds 2", blinds);
-                        blind2Added = true;
-                    }
+                    //if (blind2Added)
+                    //{
+                    //    Station.UnregisterTurnOnOffDevice("Blinds 2", blinds.Id);
+                    //    blind2Added = false;
+                    //}
+                    //else
+                    //{
+                    //    Station.RegisterTurnOnOffDevice("Guybrush Inc", "Blinds 2", "1", blinds.Id.ToString(), "Guybrush blinds 2", blinds);
+                    //    blind2Added = true;
+                    //}
 
                     if (reading2Added)
                     {
@@ -107,9 +107,9 @@ namespace Guybrush.SmartHome.Station.UWP
                     await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
                   () =>
                   {
-                      light.Status = !light.Status;
-
-
+                      //     light.Status = !light.Status;
+                      //
+                      //
                       if (term.Value == 15)
                           term.Value = 0;
                       else

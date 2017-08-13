@@ -25,5 +25,8 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <Capability Name="allJoyn" />
+    <Capability Name="internetClientServer" />
+    <Capability Name="codeGeneration" />
+    <Capability Name="privateNetworkClientServer" />
   </Capabilities>
 </Package>
