@@ -6,7 +6,6 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Guybrush.SmartHome.Station.UWP.Tests
 {
@@ -134,4 +133,3 @@ namespace Guybrush.SmartHome.Station.UWP.Tests
         }
     }
 }
-

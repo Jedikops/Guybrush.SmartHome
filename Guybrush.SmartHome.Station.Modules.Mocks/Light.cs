@@ -2,14 +2,11 @@
 using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Shared;
 using System;
-using Windows.Devices.Gpio;
 
 namespace Guybrush.SmartHome.Modules.Standard.Mocks
 {
     public class Light : Observable, ITurnOnOffModule
     {
-        GpioController GPIO;
-        GpioPin pin;
 
         public Light()
         {
@@ -41,8 +38,6 @@ namespace Guybrush.SmartHome.Modules.Standard.Mocks
 
             set
             {
-
-
 
                 _status = value;
                 ValueChanged?.Invoke(this, value);

@@ -5,8 +5,8 @@
     xmlns:local="using:Guybrush.SmartHome.Station.UWP.Tests"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:Guybrush.SmartHome.Modules.Standard"
     mc:Ignorable="d">
-
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>

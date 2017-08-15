@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{ECEBBD89-9CEC-4F20-9F06-E6D0F143A030}</ProjectGuid>
+    <ProjectGuid>{62F33F88-5023-49A3-9ABB-D63E2ED8C844}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Guybrush.SmartHome.Station.UWP.Tests</RootNamespace>
@@ -16,7 +16,7 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Guybrush.SmartHome.Station.UWP.Tests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Guybrush.SmartHome.Station_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -105,7 +105,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Guybrush.SmartHome.Station.UWP.Tests_TemporaryKey.pfx" />
+    <None Include="Guybrush.SmartHome.Station_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -133,7 +133,7 @@
       <Name>Guybrush.SmartHome.Modules</Name>
     </ProjectReference>
     <ProjectReference Include="..\Guybrush.SmartHome.Shared\Guybrush.SmartHome.Shared.csproj">
-      <Project>{D450DE0D-30A6-4FD9-9786-94099F5DC371}</Project>
+      <Project>{d450de0d-30a6-4fd9-9786-94099f5dc371}</Project>
       <Name>Guybrush.SmartHome.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\Guybrush.SmartHome.Station.Core\Guybrush.SmartHome.Station.Core.csproj">
@@ -145,6 +145,7 @@
       <Name>Guybrush.SmartHome.Station.Modules.Mocks</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
