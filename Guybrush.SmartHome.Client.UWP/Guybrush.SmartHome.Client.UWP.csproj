@@ -99,6 +99,9 @@
       <DependentUpon>ConditionDetailControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Handlers\CollectionHandler.cs" />
+    <Compile Include="Pages\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ConditionDataTemplateDictionary.xaml.cs">
       <DependentUpon>ConditionDataTemplateDictionary.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\DevicesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

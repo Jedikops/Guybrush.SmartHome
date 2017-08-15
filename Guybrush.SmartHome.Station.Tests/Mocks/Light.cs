@@ -1,11 +1,26 @@
 ﻿using Guybrush.SmartHome.Modules.Delegates;
 using Guybrush.SmartHome.Modules.Interfaces;
+using Guybrush.SmartHome.Shared;
 using System;
+using Windows.Devices.Gpio;
 
-namespace Guybrush.SmartHome.Station.Tests.Mocks
+namespace Guybrush.SmartHome.Modules.Standard
 {
-    public class Light : ITurnOnOffModule
+    public class Light : Observable, ITurnOnOffModule
     {
+        GpioController GPIO;
+        GpioPin pin;
+
+        public Light()
+        {
+            try
+            {
+                GPIO = GpioController.GetDefault();
+                pin = GPIO.OpenPin(6);
+                pin.SetDriveMode(GpioPinDriveMode.Output);
+            }
+            catch { }
+        }
         private Guid _id = Guid.NewGuid();
         public Guid Id
         {
@@ -13,6 +28,13 @@ namespace Guybrush.SmartHome.Station.Tests.Mocks
             {
                 return _id;
             }
+        }
+
+        private string _name = "";
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
         }
 
         private bool _status;
@@ -25,9 +47,13 @@ namespace Guybrush.SmartHome.Station.Tests.Mocks
 
             set
             {
+
+
+
                 _status = value;
-                if (ValueChanged != null)
-                    ValueChanged(this, value);
+                ValueChanged?.Invoke(this, value);
+                OnPropertyChanged();
+
             }
         }
 

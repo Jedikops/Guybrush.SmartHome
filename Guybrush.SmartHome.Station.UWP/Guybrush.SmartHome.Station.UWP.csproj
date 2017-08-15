@@ -136,6 +136,10 @@
       <Project>{3F26B05D-F5B3-4F56-9ADB-791B7A360CF8}</Project>
       <Name>Guybrush.SmartHome.Modules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Guybrush.SmartHome.Shared\Guybrush.SmartHome.Shared.csproj">
+      <Project>{d450de0d-30a6-4fd9-9786-94099f5dc371}</Project>
+      <Name>Guybrush.SmartHome.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Guybrush.SmartHome.Station.Core\Guybrush.SmartHome.Station.Core.csproj">
       <Project>{d4d1300f-00f5-4498-8e97-72150b7cb991}</Project>
       <Name>Guybrush.SmartHome.Station.Core</Name>

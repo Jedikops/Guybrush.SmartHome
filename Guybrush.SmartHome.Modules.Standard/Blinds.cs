@@ -1,6 +1,6 @@
 ﻿using Guybrush.SmartHome.Modules.Delegates;
 using Guybrush.SmartHome.Modules.Interfaces;
-using Guybrush.SmartHome.Station.Core.Base;
+using Guybrush.SmartHome.Shared;
 using System;
 using Windows.Devices.Gpio;
 

@@ -1,6 +1,6 @@
 ﻿using Guybrush.SmartHome.Client.Data;
-using Guybrush.SmartHome.Client.Data.Base;
 using Guybrush.SmartHome.Client.UWP.Handlers;
+using Guybrush.SmartHome.Shared;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;

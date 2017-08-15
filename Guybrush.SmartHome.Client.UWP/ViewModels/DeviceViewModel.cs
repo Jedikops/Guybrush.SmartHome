@@ -1,4 +1,4 @@
-﻿using Guybrush.SmartHome.Client.Data.Base;
+﻿using Guybrush.SmartHome.Shared;
 
 namespace Guybrush.SmartHome.Client.UWP.ViewModels
 {

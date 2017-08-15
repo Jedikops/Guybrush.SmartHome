@@ -1,6 +1,6 @@
 ﻿using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Modules.Standard;
-using Guybrush.SmartHome.Station.Core.Base;
+using Guybrush.SmartHome.Shared;
 using System.Collections.Generic;
 
 namespace Guybrush.SmartHome.Station.UWP.Code

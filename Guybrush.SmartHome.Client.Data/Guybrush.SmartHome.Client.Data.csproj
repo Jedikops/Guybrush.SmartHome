@@ -107,7 +107,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\Observable.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Managers\ClientConditionManager.cs" />
     <Compile Include="Models\Device.cs" />

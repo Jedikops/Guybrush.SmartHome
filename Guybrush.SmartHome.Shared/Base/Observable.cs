@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Guybrush.SmartHome.Station.Core.Base
+namespace Guybrush.SmartHome.Shared
 {
     public class Observable : INotifyPropertyChanged
     {

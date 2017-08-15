@@ -3,7 +3,7 @@ using Guybrush.SmartHome.Modules.Interfaces;
 using Guybrush.SmartHome.Modules.TestInterface;
 using System;
 
-namespace Guybrush.SmartHome.Station.Tests.Mocks
+namespace Guybrush.SmartHome.Modules.Standard
 {
     public class Termomethre : IReaderModule, ITestReadModule
     {
@@ -16,6 +16,14 @@ namespace Guybrush.SmartHome.Station.Tests.Mocks
             }
         }
 
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+
         private int _value;
         public int Value
         {
@@ -23,18 +31,22 @@ namespace Guybrush.SmartHome.Station.Tests.Mocks
             set
             {
                 _value = value;
-                if (ValueChanged != null)
-                    ValueChanged(this, value);
+                ValueChanged?.Invoke(this, value);
             }
         }
 
-        private readonly string _unit = "C";
-
+        private string _unit = "C";
         public string Unit
         {
             get { return _unit; }
+            set
+            {
+                _unit = value;
+                UnitChanged?.Invoke(this, value);
+            }
         }
 
         public event ReaderValueEventArgs ValueChanged;
+        public event ReaderUnitEventArgs UnitChanged;
     }
 }

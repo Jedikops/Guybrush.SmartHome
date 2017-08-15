@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="Code\AllJoyn\Devices\DisplayDevice.cs" />
     <Compile Include="Code\AllJoyn\Devices\ReaderDevice.cs" />
-    <Compile Include="Code\Base\Observable.cs" />
     <Compile Include="Code\Enums\StationStatus.cs" />
     <Compile Include="Code\Helpers\StationHelper.cs" />
     <Compile Include="Code\AllJoyn\Devices\TurnOnOffDevice.cs" />
@@ -120,10 +119,6 @@
     <EmbeddedResource Include="Properties\Guybrush.SmartHome.Station.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Guybrush.SmartHome.Client.Data\Guybrush.SmartHome.Client.Data.csproj">
-      <Project>{89D149AF-0271-4CDB-BB95-A64B8683F5A5}</Project>
-      <Name>Guybrush.SmartHome.Client.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Guybrush.SmartHome.Modules\Guybrush.SmartHome.Modules.csproj">
       <Project>{3F26B05D-F5B3-4F56-9ADB-791B7A360CF8}</Project>
       <Name>Guybrush.SmartHome.Modules</Name>

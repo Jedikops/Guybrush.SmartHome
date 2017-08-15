@@ -1,0 +1,28 @@
+﻿<Guybrush.Station>
+  <Devices>
+    <Device>
+      <Id>7AEBD75E-9185-4D5C-9B11-91C3355FCA38</Id>
+      <Title>Air Conditioner</Title>
+      <Vendor>Guybrush Inc</Vendor>
+      <Model>1</Model>
+      <Description>Guybrush air conditioner</Description>
+      <Protocol name="GPIO">
+        <PinNumber>5</PinNumber>
+      </Protocol>
+      <AssemblyName>Guybrush.SmartHome.Modules.Standard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8a720a33e5841315</AssemblyName>
+        <ClassName>Guybrush.SmartHome.Modules.Standard.LightSensor</ClassName>
+    </Device>
+    <Device>
+      <Id>1EFA503D-1DCA-4B14-AF50-9F3762EE9D61</Id>
+      <Title>Light Intensity sensor</Title>
+      <Vendor>Guybrush Inc</Vendor>
+      <Model>1</Model>
+      <Description>Guybrush light intensity sensor</Description>
+      <Protocol name="I2C">
+        <Address>0x77</Address>
+      </Protocol>
+      <AssemblyName>Guybrush.SmartHome.Modules.Standard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8a720a33e5841315</AssemblyName>
+      <ClassName>Guybrush.SmartHome.Modules.Standard.LightSensor</ClassName>
+    </Device>
+  </Devices>
+</Guybrush.Station>

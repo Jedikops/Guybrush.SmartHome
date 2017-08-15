@@ -1,6 +1,5 @@
-﻿using Guybrush.SmartHome.Station.Tests.Mocks;
+﻿using Guybrush.SmartHome.Modules.Standard;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,7 +27,7 @@ namespace Guybrush.SmartHome.Station.Tests
         public void RegisterDevice()
         {
             var light = new Light();
-            _station.RegisterTurnOnOffDevice("Light", "Guybrush Inc", "Light", "1", Guid.NewGuid().ToString(), "Guybrush Light", light);
+            _station.RegisterTurnOnOffDevice("Guybrush Inc", "Light", "1", light.Id.ToString(), "Guybrush Light", light);
             Assert.IsTrue(_station.Devices.Any(x => x.Equals(light)));
         }
 
@@ -36,7 +35,7 @@ namespace Guybrush.SmartHome.Station.Tests
         public void RegisterReading()
         {
             var lightSens = new LightSensor();
-            _station.RegisterReadingDevice("Light Intensity", "Lux", "Light intensity reading", "Current light intensity value in Lux", lightSens);
+            _station.RegisterReadingDevice("Guybrush Inc", "Light Intensity", "1", lightSens.Id.ToString(), "Guybrush light intensity sensor", lightSens);
 
             Assert.IsTrue(_station.Readers.Any(x => x.Equals(lightSens)));
 

@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="Guybrush.SmartHome.Station.UWP.Tests.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Guybrush.SmartHome.Station.UWP.Tests"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Margin="10" Grid.Row="0">
+            <TextBlock x:Name="title" Text="Devices"  VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+        </Border>
+        <StackPanel Grid.Row="1" VerticalAlignment="Top" Margin="10,0,0,0" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Light " Width="220" />
+                <TextBlock Text="{x:Bind ViewModel.light.Status,Mode=OneWay}" Width="220"  />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Blinds" Width="220"  />
+                <TextBlock Text="{x:Bind ViewModel.blinds.Status,Mode=OneWay}" Width="220"  />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Air" Width="220"  />
+                <TextBlock Text="{x:Bind ViewModel.air.Status,Mode=OneWay}" Width="220"  />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
