@@ -79,13 +79,13 @@ namespace Guybrush.SmartHome.Station.UWP
             {
                 //bool blind2Added = false;
                 //var blinds = new Blinds() { Name = "Blinds 2" };
-                bool reading2Added = false;
-                var lightSens = new LightSensor() { Name = "Light Intensity 2" };
+                //bool reading2Added = false;
+                //var lightSens = new LightSensor() { Name = "Light Intensity 2" };
 
 
                 while (true)
                 {
-                    await Task.Delay(15000);
+                    await Task.Delay(10000);
 
                     //if (blind2Added)
                     //{
@@ -115,7 +115,7 @@ namespace Guybrush.SmartHome.Station.UWP
 
                       int val = term.Value;
                       val = humi.Value;
-                      val = lightSens.Value;
+                      val = ligsens.Value;
 
                       //if (term.Value == 15)
                       //    term.Value = 0;

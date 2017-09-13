@@ -32,7 +32,7 @@ namespace Guybrush.SmartHome.Modules.Standard
                 if (_value != val)
                 {
                     _value = val;
-                    ValueChanged?.Invoke(this, Value);
+                    ValueChanged?.Invoke(this, _value);
                 }
                 return _value;
 

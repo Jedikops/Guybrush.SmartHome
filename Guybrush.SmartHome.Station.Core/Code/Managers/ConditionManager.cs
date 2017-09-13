@@ -28,15 +28,15 @@ namespace Guybrush.SmartHome.Station.Core.Managers
             {
                 _conditions = conditions;
 
-                _conditions.Add(new Condition()
-                {
-                    SourceDeviceType = DeviceType.TurnOnOffDevice,
-                    SourceDeviceName = "Light",
-                    TargetDeviceName = "Blinds",
-                    RequiredValue = 1,
-                    ConditionType = ConditionType.Equals,
-                    TargetValue = 1
-                });
+                // _conditions.Add(new Condition()
+                // {
+                //     SourceDeviceType = DeviceType.TurnOnOffDevice,
+                //     SourceDeviceName = "Light",
+                //     TargetDeviceName = "Blinds",
+                //     RequiredValue = 1,
+                //     ConditionType = ConditionType.Equals,
+                //     TargetValue = 1
+                // });
 
                 _conditions.Add(new Condition()
                 {
@@ -45,6 +45,16 @@ namespace Guybrush.SmartHome.Station.Core.Managers
                     TargetDeviceName = "Air Conditioner",
                     RequiredValue = 14,
                     ConditionType = ConditionType.More,
+                    TargetValue = 1
+                });
+
+                _conditions.Add(new Condition()
+                {
+                    SourceDeviceType = DeviceType.ReaderDevice,
+                    SourceDeviceName = "Light Sensor",
+                    TargetDeviceName = "Light",
+                    RequiredValue = 500,
+                    ConditionType = ConditionType.Less,
                     TargetValue = 1
                 });
             }
@@ -132,7 +142,7 @@ namespace Guybrush.SmartHome.Station.Core.Managers
                     var targetDevice = _devices.FirstOrDefault(x => x.Name == condition.TargetDeviceName);
                     if (targetDevice != null)
                     {
-                        var currValue = sourceDevice.Value;
+                        var currValue = value;
                         int sourceValue = condition.RequiredValue;
 
                         bool isFulfilled = false;

@@ -14,27 +14,9 @@ namespace Guybrush.SmartHome.Modules.Standard
             {
                 if (_current == null)
                 {
-                    //Initialize i2c tsl2561 device 
-                    var settings = new I2cConnectionSettings(TSL2561Sensor.TSL2561_ADDR);
-                    settings.BusSpeed = I2cBusSpeed.FastMode;
-                    settings.SharingMode = I2cSharingMode.Shared;
-
-                    string aqs = I2cDevice.GetDeviceSelector("I2C1");
-                    DeviceInformationCollection dis = null;
-
-                    Task.Factory.StartNew(async () =>
-                    {
-                        dis = await DeviceInformation.FindAllAsync(aqs);
-                    }).Wait();
-
-                    I2cDevice I2CDev = null;
-                    Task.Factory.StartNew(async () =>
-                    {
-                        I2CDev = await I2cDevice.FromIdAsync(dis[0].Id, settings);
-                    }).Wait();
-
-                    _current = new TSL2561Sensor(ref I2CDev);
-                    _current.PowerUp();
+                    _current = new TSL2561Sensor();
+                    Task task = _current.Initialize();
+                    task.Wait();
                 }
                 return _current;
             }
@@ -64,6 +46,22 @@ namespace Guybrush.SmartHome.Modules.Standard
         {
             this.I2C = I2CDevice;
         }
+        public TSL2561Sensor()
+        {
+
+        }
+        public async Task Initialize()
+        {
+            var settings = new I2cConnectionSettings(TSL2561Sensor.TSL2561_ADDR);
+            settings.BusSpeed = I2cBusSpeed.FastMode;
+            settings.SharingMode = I2cSharingMode.Shared;
+
+            string aqs = I2cDevice.GetDeviceSelector("I2C1");
+            DeviceInformationCollection dis = await DeviceInformation.FindAllAsync(aqs);
+            this.I2C = await I2cDevice.FromIdAsync(dis[0].Id, settings);
+            _current.PowerUp();
+        }
+
 
         // TSL2561 Sensor Power up
         public void PowerUp()

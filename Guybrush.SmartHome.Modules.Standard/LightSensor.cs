@@ -7,6 +7,10 @@ namespace Guybrush.SmartHome.Modules.Standard
 {
     public class LightSensor : IReaderModule, ITestReadModule
     {
+        public LightSensor()
+        {
+            // var sens = TSL2561Sensor.Current;
+        }
         private Guid _id = Guid.NewGuid();
         public Guid Id
         {
@@ -37,7 +41,7 @@ namespace Guybrush.SmartHome.Modules.Standard
                 if (_value != lux)
                 {
                     _value = Convert.ToInt32(lux);
-                    ValueChanged?.Invoke(this, Value);
+                    ValueChanged?.Invoke(this, _value);
                 }
                 return _value;
             }
