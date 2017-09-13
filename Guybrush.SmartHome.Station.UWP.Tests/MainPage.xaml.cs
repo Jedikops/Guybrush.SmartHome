@@ -80,7 +80,7 @@ namespace Guybrush.SmartHome.Station.UWP.Tests
 
                 while (true)
                 {
-                    await Task.Delay(15000);
+                    await Task.Delay(10000);
 
                     //if (blind2Added)
                     //{
@@ -110,10 +110,22 @@ namespace Guybrush.SmartHome.Station.UWP.Tests
                       //     light.Status = !light.Status;
                       //
                       //
+
+                      if (humi.Value == 55)
+                          humi.Value = 75;
+                      else
+                          humi.Value = 55;
+
                       if (term.Value == 15)
-                          term.Value = 0;
+                          term.Value = 25;
                       else
                           term.Value = 15;
+
+
+                      if (ligsens.Value == 315)
+                          ligsens.Value = 715;
+                      else
+                          ligsens.Value = 315;
 
                       if (disp.Text == "Chupacabra")
                           disp.Text = "Zlo";
