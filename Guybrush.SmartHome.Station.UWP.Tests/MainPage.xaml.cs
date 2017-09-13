@@ -61,9 +61,10 @@ namespace Guybrush.SmartHome.Station.UWP.Tests
                 Station.RegisterTurnOnOffDevice("Guybrush Inc", "Air Conditioner", "1", air.Id.ToString(), "Guybrush air conditioner", air);
                 Station.RegisterTurnOnOffDevice("Guybrush Inc", "Blinds", "1", blinds.Id.ToString(), "Guybrush blinds", blinds);
 
-                Station.RegisterReadingDevice("Guybrush Inc", "Light Intensity", "1", ligsens.Id.ToString(), "Guybrush light intensity sensor", ligsens);
+
                 Station.RegisterReadingDevice("Guybrush Inc", "Temperature", "1", term.Id.ToString(), "Guybrush termomether", term);
                 Station.RegisterReadingDevice("Guybrush Inc", "Humidity", "1", humi.Id.ToString(), "Guybrush humidity sensor", humi);
+                Station.RegisterReadingDevice("Guybrush Inc", "Light Intensity", "1", ligsens.Id.ToString(), "Guybrush light intensity sensor", ligsens);
 
                 Station.RegisterDisplayDevice("Display", "Guybrush Inc", "Display", "1", disp.Id.ToString(), "Guybrush display device", disp);
 
@@ -75,7 +76,7 @@ namespace Guybrush.SmartHome.Station.UWP.Tests
                 //bool blind2Added = false;
                 //var blinds = new Blinds() { Name = "Blinds 2" };
                 bool reading2Added = false;
-                var lightSens = new LightSensor() { Name = "Light Intensity 2" };
+                //var lightSens = new LightSensor() { Name = "Light Intensity 2" };
 
 
                 while (true)
@@ -93,16 +94,16 @@ namespace Guybrush.SmartHome.Station.UWP.Tests
                     //    blind2Added = true;
                     //}
 
-                    if (reading2Added)
-                    {
-                        Station.UnregisterReadingDevice("Light Intensity 2", lightSens.Id);
-                        reading2Added = false;
-                    }
-                    else
-                    {
-                        Station.RegisterReadingDevice("Guybrush Inc", "Light Intensity", "1", lightSens.Id.ToString(), "Guybrush light intensity sensor", lightSens);
-                        reading2Added = true;
-                    }
+                    //if (reading2Added)
+                    //{
+                    //    Station.UnregisterReadingDevice("Light Intensity 2", lightSens.Id);
+                    //    reading2Added = false;
+                    //}
+                    //else
+                    //{
+                    //    Station.RegisterReadingDevice("Guybrush Inc", "Light Intensity", "1", lightSens.Id.ToString(), "Guybrush light intensity sensor", lightSens);
+                    //    reading2Added = true;
+                    //}
 
                     await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
                   () =>
