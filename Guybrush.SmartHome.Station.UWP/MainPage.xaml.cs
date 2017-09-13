@@ -1,4 +1,5 @@
-﻿using Guybrush.SmartHome.Modules.Standard;
+﻿using Guybrush.SmartHome.Modules.Interfaces;
+using Guybrush.SmartHome.Modules.Standard;
 using Guybrush.SmartHome.Station.UWP.Code;
 using System;
 using System.Threading.Tasks;
@@ -16,14 +17,14 @@ namespace Guybrush.SmartHome.Station.UWP
     {
         StationViewModel ViewModel;
 
-        Light light = new Light() { Name = "Light" };
-        Blinds blinds = new Blinds() { Name = "Blinds" };
-        AirConditioner air = new AirConditioner() { Name = "Air Conditioner" };
+        ITurnOnOffModule light = new Light() { Name = "Light" };
+        ITurnOnOffModule blinds = new Blinds() { Name = "Blinds" };
+        ITurnOnOffModule air = new AirConditioner() { Name = "Air Conditioner" };
 
-        Termomethre term = new Termomethre() { Name = "Termomethre" };
-        HumiditySensor humi = new HumiditySensor() { Name = "Humidity Sensor" };
-        LightSensor ligsens = new LightSensor() { Name = "Light Sensor" };
-        Display disp = new Display();
+        IReaderModule term = new Termomethre() { Name = "Termomethre" };
+        IReaderModule humi = new HumiditySensor() { Name = "Humidity Sensor" };
+        IReaderModule ligsens = new LightSensor() { Name = "Light Sensor" };
+        IDisplayModule disp = new Display();
 
         public MainPage()
         {
@@ -36,8 +37,12 @@ namespace Guybrush.SmartHome.Station.UWP
         private void Devices_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel = new StationViewModel();
-            ViewModel.light = light;
-            ViewModel.blinds = blinds;
+            ViewModel.AddModule(light);
+            ViewModel.AddModule(blinds);
+            ViewModel.AddModule(air);
+
+            ViewModel.ligsens = ligsens;
+            ViewModel.term = term;
             ViewModel.air = air;
             Bindings.Update();
         }
@@ -93,27 +98,29 @@ namespace Guybrush.SmartHome.Station.UWP
                     //    blind2Added = true;
                     //}
 
-                    if (reading2Added)
-                    {
-                        Station.UnregisterReadingDevice("Light Intensity 2", lightSens.Id);
-                        reading2Added = false;
-                    }
-                    else
-                    {
-                        Station.RegisterReadingDevice("Guybrush Inc", "Light Intensity", "1", lightSens.Id.ToString(), "Guybrush light intensity sensor", lightSens);
-                        reading2Added = true;
-                    }
+                    //if (reading2Added)
+                    //{
+                    //    Station.UnregisterReadingDevice("Light Intensity 2", lightSens.Id);
+                    //    reading2Added = false;
+                    //}
+                    //else
+                    //{
+                    //    Station.RegisterReadingDevice("Guybrush Inc", "Light Intensity", "1", lightSens.Id.ToString(), "Guybrush light intensity sensor", lightSens);
+                    //    reading2Added = true;
+                    //}
 
                     await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
                   () =>
                   {
-                      //     light.Status = !light.Status;
-                      //
-                      //
-                      if (term.Value == 15)
-                          term.Value = 0;
-                      else
-                          term.Value = 15;
+
+                      int val = term.Value;
+                      val = humi.Value;
+                      val = lightSens.Value;
+
+                      //if (term.Value == 15)
+                      //    term.Value = 0;
+                      //else
+                      //    term.Value = 15;
 
                       if (disp.Text == "Chupacabra")
                           disp.Text = "Zlo";

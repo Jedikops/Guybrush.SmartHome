@@ -8,7 +8,45 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel HorizontalAlignment="Left" Height="635" VerticalAlignment="Top" Width="360"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Margin="10" Grid.Row="0">
+            <TextBlock x:Name="title" Text="Permissions"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Border>
+        <StackPanel x:Name="UsersList" Grid.Row="1"  >
+            <ListView x:Name="DevicesListView" SelectionMode="Single" >
+                <ListViewItem>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="350"  Text="Andrew"></TextBlock>
+                        <Button Content="Delete" ></Button>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="350"  Text="Iwonka"></TextBlock>
+                        <Button Content="Delete" ></Button>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+            <Button Content="New" ClickMode="Release" Click="Button_Click" ></Button>
+        </StackPanel>
 
+        <StackPanel HorizontalAlignment="Center" Margin="10,10,10,10" Visibility="Collapsed" x:Name="newUserPanel" Grid.Row="1" >
+            <TextBlock Text="Create new user" Margin="10" FontSize="24px"  ></TextBlock>
+            <TextBlock Text="Username" Margin="10,10,10,0"></TextBlock>
+            <TextBox x:Name="UserNameTextBox" Width="300" Margin="10" ></TextBox>
+            <TextBlock Text="Password" Margin="10,10,10,0" ></TextBlock>
+            <PasswordBox x:Name="PasswordBox" PasswordChar="*" Margin="10"></PasswordBox>
+            <TextBlock Text="Confirm password" Margin="10,10,10,0" ></TextBlock>
+            <PasswordBox x:Name="PasswordBoxConfirm" PasswordChar="*" Margin="10"></PasswordBox>
+            <Button Content="Create" Click="Button_Click_1" HorizontalAlignment="Right" Margin="10"></Button>
+            <TextBlock x:Name="ValdationTextBlock" Visibility="Collapsed" IsColorFontEnabled="True" Foreground="Red" Margin="10"></TextBlock>
+        </StackPanel>
     </Grid>
 </Page>

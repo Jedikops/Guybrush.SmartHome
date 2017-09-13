@@ -26,11 +26,25 @@ namespace Guybrush.SmartHome.Modules.Standard
         private int _value;
         public int Value
         {
-            get { return _value; }
+            get
+            {
+                Boolean Gain = false;
+                uint MS = (uint)TSL2561Sensor.Current.SetTiming(false, 2);
+                uint[] Data = TSL2561Sensor.Current.GetData();
+                double lux = TSL2561Sensor.Current.GetLux(Gain, MS, Data[0], Data[1]);
+
+                //int val = Convert.ToInt32(BME280Sensor.Current.ReadHumidity().Result);
+                if (_value != lux)
+                {
+                    _value = Convert.ToInt32(lux);
+                    ValueChanged?.Invoke(this, Value);
+                }
+                return _value;
+            }
             set
             {
-                _value = value;
-                ValueChanged?.Invoke(this, value);
+                //_value = value;
+                //ValueChanged?.Invoke(this, value);
             }
         }
 

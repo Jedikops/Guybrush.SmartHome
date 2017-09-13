@@ -13,14 +13,14 @@
             <TextBlock Text="Not Connected!" Margin="10" FontSize="32px"></TextBlock>
             <Button Content="Refresh" Click="Button_Click_1" HorizontalAlignment="Right"></Button>
         </StackPanel>
-        <StackPanel HorizontalAlignment="Center" Margin="10,50,10,50" Visibility="Collapsed" x:Name="loginPanel">
-            <TextBlock Text="Connected! Log in" Margin="10" FontSize="32px"></TextBlock>
-            <TextBlock Text="Username"></TextBlock>
-            <TextBox x:Name="UserNameTextBox" Width="250" ></TextBox>
-            <TextBlock Text="Password"></TextBlock>
-            <PasswordBox x:Name="PasswordBox" PasswordChar="*"></PasswordBox>
-            <Button Content="Log in" Click="Button_Click" HorizontalAlignment="Right"></Button>
-            <TextBlock x:Name="ValdationTextBlock" Visibility="Collapsed" IsColorFontEnabled="True" Foreground="Red"></TextBlock>
+        <StackPanel HorizontalAlignment="Center" Margin="10,50,10,50" Visibility="Collapsed" x:Name="loginPanel" >
+            <TextBlock Text="Connected! Log in" Margin="10" FontSize="32px"  ></TextBlock>
+            <TextBlock Text="Username" Margin="10,10,10,0"></TextBlock>
+            <TextBox x:Name="UserNameTextBox" Width="300" Margin="10" ></TextBox>
+            <TextBlock Text="Password" Margin="10,10,10,0" ></TextBlock>
+            <PasswordBox x:Name="PasswordBox" PasswordChar="*" Margin="10"></PasswordBox>
+            <Button Content="Log in" Click="Button_Click" HorizontalAlignment="Right" Margin="10"></Button>
+            <TextBlock x:Name="ValdationTextBlock" Visibility="Collapsed" IsColorFontEnabled="True" Foreground="Red" Margin="10"></TextBlock>
         </StackPanel>
     </Grid>
 </Page>

@@ -27,11 +27,20 @@ namespace Guybrush.SmartHome.Modules.Standard
         private int _value;
         public int Value
         {
-            get { return _value; }
+            get
+            {
+                int val = Convert.ToInt32(BME280Sensor.Current.ReadTemperature().Result);
+                if (_value != val)
+                {
+                    _value = val;
+                    ValueChanged?.Invoke(this, Value);
+                }
+                return _value;
+            }
             set
             {
-                _value = value;
-                ValueChanged?.Invoke(this, value);
+                //_value = value;
+                //ValueChanged?.Invoke(this, value);
             }
         }
 

@@ -23,5 +23,29 @@ namespace Guybrush.SmartHome.Client.UWP.Pages
             base.OnNavigatedTo(e);
 
         }
+
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            newUserPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            UsersList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
+        private void Button_Click_1(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+            if (PasswordBox.Password == PasswordBoxConfirm.Password)
+            {
+
+                DevicesListView.Items.Add(new ListViewItem() { Content = UserNameTextBox.Text });
+                newUserPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                UsersList.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                ValdationTextBlock.Text = "Passwords does not match.";
+                ValdationTextBlock.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+
+        }
     }
 }
